@@ -3,6 +3,7 @@ import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
 import BrainDump from './components/BrainDump';
 import SmartPriority from './components/SmartPriority';
+import RealityCheck from './components/RealityCheck';
 import HabitTracker from './components/HabitTracker';
 import MoodJournal from './components/MoodJournal';
 import GoalsTracker from './components/GoalsTracker';
@@ -15,7 +16,7 @@ export default function App() {
 
   // Default initial users
   const defaultUsers = [
-    { id: '1', name: 'Priya', role: 'CS Student', avatarColor: '#6366f1', avatarEmoji: '🎓' },
+    { id: '1', name: 'Priya', role: 'CS Student', avatarColor: '#ec4899', avatarEmoji: '🎓' },
     { id: '2', name: 'Alex', role: 'Pre-Med Major', avatarColor: '#10b981', avatarEmoji: '🔬' }
   ];
 
@@ -332,6 +333,14 @@ export default function App() {
             deleteCard={deleteSharedTask}
             toggleProcessed={toggleSharedTaskProcessed}
             addHabit={addHabit}
+            setActiveTab={setActiveTab}
+          />
+        )}
+
+        {activeTab === 'realityCheck' && (
+          <RealityCheck 
+            tasks={brainDumpCards}
+            habits={habits}
             setActiveTab={setActiveTab}
           />
         )}
