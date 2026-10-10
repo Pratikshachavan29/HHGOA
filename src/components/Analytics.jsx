@@ -6,7 +6,8 @@ import {
   Smile, 
   Clock, 
   Award,
-  Sparkles
+  Sparkles,
+  BookOpen
 } from 'lucide-react';
 
 export default function Analytics({ habits, moodLogs, focusTime }) {
@@ -36,8 +37,8 @@ export default function Analytics({ habits, moodLogs, focusTime }) {
     <div className="analytics-container animate-fade-in">
       <div className="page-header">
         <div>
-          <h1 className="page-title">Life Analytics & Insights</h1>
-          <p className="page-subtitle">Visual summaries of your consistency, emotional trends, and deep work output</p>
+          <h1 className="page-title">Student Insights & Trends</h1>
+          <p className="page-subtitle">See how your study habits, energy levels, and focus hours align over time</p>
         </div>
       </div>
 
@@ -46,7 +47,7 @@ export default function Analytics({ habits, moodLogs, focusTime }) {
         <div className="glass-card highlight-card">
           <Award size={28} className="highlight-icon text-indigo" />
           <div className="highlight-info">
-            <span className="highlight-title">Weekly Consistency</span>
+            <span className="highlight-title">Weekly Study Consistency</span>
             <span className="highlight-value">84%</span>
             <span className="highlight-sub">+12% from last week</span>
           </div>
@@ -55,7 +56,7 @@ export default function Analytics({ habits, moodLogs, focusTime }) {
         <div className="glass-card highlight-card">
           <Smile size={28} className="highlight-icon text-emerald" />
           <div className="highlight-info">
-            <span className="highlight-title">Primary Mood</span>
+            <span className="highlight-title">Top Study Vibe</span>
             <span className="highlight-value">Productive ⚡</span>
             <span className="highlight-sub">72% positive energy</span>
           </div>
@@ -64,9 +65,9 @@ export default function Analytics({ habits, moodLogs, focusTime }) {
         <div className="glass-card highlight-card">
           <Clock size={28} className="highlight-icon text-amber" />
           <div className="highlight-info">
-            <span className="highlight-title">Deep Work Time</span>
+            <span className="highlight-title">Total Study Hours</span>
             <span className="highlight-value">{Math.round(focusTime / 60)} Hours</span>
-            <span className="highlight-sub">14 sessions completed</span>
+            <span className="highlight-sub">14 study sprints</span>
           </div>
         </div>
       </div>
@@ -75,7 +76,7 @@ export default function Analytics({ habits, moodLogs, focusTime }) {
         {/* Habit Completion Chart */}
         <div className="glass-card chart-card">
           <div className="chart-header">
-            <h2 className="chart-title">Weekly Habit Completion</h2>
+            <h2 className="chart-title">Weekly Task & Routine Completion</h2>
             <span className="badge badge-emerald">Past 7 Days</span>
           </div>
 
@@ -98,7 +99,7 @@ export default function Analytics({ habits, moodLogs, focusTime }) {
         {/* Mood Distribution */}
         <div className="glass-card chart-card">
           <div className="chart-header">
-            <h2 className="chart-title">Mood & Emotion Breakdown</h2>
+            <h2 className="chart-title">Energy & Vibe Breakdown</h2>
             <span className="badge badge-indigo">Distribution</span>
           </div>
 

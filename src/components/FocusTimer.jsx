@@ -7,14 +7,15 @@ import {
   Coffee, 
   Zap, 
   CheckCircle,
-  Sparkles
+  Sparkles,
+  BookOpen
 } from 'lucide-react';
 
 export default function FocusTimer({ addFocusMinutes }) {
   const modes = [
-    { label: 'Deep Focus', minutes: 25, type: 'focus', icon: Zap },
-    { label: 'Short Break', minutes: 5, type: 'break', icon: Coffee },
-    { label: 'Long Break', minutes: 15, type: 'longBreak', icon: Coffee }
+    { label: 'Deep Study', minutes: 25, type: 'focus', icon: Zap },
+    { label: 'Quick Rest', minutes: 5, type: 'break', icon: Coffee },
+    { label: 'Brain Break', minutes: 15, type: 'longBreak', icon: Coffee }
   ];
 
   const [currentMode, setCurrentMode] = useState(modes[0]);
@@ -65,8 +66,8 @@ export default function FocusTimer({ addFocusMinutes }) {
     <div className="focus-timer-container animate-fade-in">
       <div className="page-header">
         <div>
-          <h1 className="page-title">Pomodoro Focus Timer</h1>
-          <p className="page-subtitle">Boost productivity with time-boxed focus sprints and structured breaks</p>
+          <h1 className="page-title">Pomodoro Study Sprints</h1>
+          <p className="page-subtitle">Lock in for assignments & exam revision with distraction-free focus blocks</p>
         </div>
       </div>
 
@@ -92,7 +93,7 @@ export default function FocusTimer({ addFocusMinutes }) {
         <div className="task-input-wrapper">
           <input 
             type="text" 
-            placeholder="Target focus task (e.g. Finish LifeLens UI components)..." 
+            placeholder="What assignment or topic are you locking in on right now?" 
             value={focusTask}
             onChange={(e) => setFocusTask(e.target.value)}
             className="input-field task-input"
@@ -121,7 +122,7 @@ export default function FocusTimer({ addFocusMinutes }) {
         <div className="timer-controls">
           <button onClick={toggleTimer} className={`btn btn-lg ${isRunning ? 'btn-pause' : 'btn-primary'}`}>
             {isRunning ? <Pause size={22} /> : <Play size={22} />}
-            <span>{isRunning ? 'Pause' : 'Start Focus'}</span>
+            <span>{isRunning ? 'Pause' : 'Start Study Sprint'}</span>
           </button>
 
           <button onClick={resetTimer} className="btn btn-secondary btn-icon-lg" title="Reset Timer">
@@ -133,7 +134,7 @@ export default function FocusTimer({ addFocusMinutes }) {
         <div className="timer-stats-footer">
           <div className="stat-pill">
             <CheckCircle size={16} className="stat-icon" />
-            <span>Completed Today: <strong>{completedSessions} sessions</strong></span>
+            <span>Study Sprints Today: <strong>{completedSessions} sessions</strong></span>
           </div>
           <div className="stat-pill">
             <Zap size={16} className="stat-icon" />

@@ -7,8 +7,7 @@ import {
   Calendar, 
   Tag, 
   Clock,
-  Sparkles,
-  TrendingUp
+  Sparkles
 } from 'lucide-react';
 
 export default function MoodJournal({ moodLogs, addMoodLog }) {
@@ -20,11 +19,11 @@ export default function MoodJournal({ moodLogs, addMoodLog }) {
     { label: 'Stressed', emoji: '🤯', score: 1, color: '#ef4444' }
   ];
 
-  const tagOptions = ['Work', 'Health', 'Sleep', 'Social', 'Exercise', 'Mindfulness', 'Family'];
+  const tagOptions = ['Exams', 'Projects', 'Interviews', 'Coffee ☕', 'Sleep', 'Friends', 'Exercise'];
 
-  const [selectedMood, setSelectedMood] = useState(moodOptions[0]);
-  const [energyLevel, setEnergyLevel] = useState(7);
-  const [selectedTags, setSelectedTags] = useState(['Health', 'Work']);
+  const [selectedMood, setSelectedMood] = useState(moodOptions[2]);
+  const [energyLevel, setEnergyLevel] = useState(8);
+  const [selectedTags, setSelectedTags] = useState(['Projects', 'Coffee ☕']);
   const [note, setNote] = useState('');
 
   const toggleTag = (tag) => {
@@ -59,8 +58,8 @@ export default function MoodJournal({ moodLogs, addMoodLog }) {
     <div className="mood-journal-container animate-fade-in">
       <div className="page-header">
         <div>
-          <h1 className="page-title">Mood & Energy Journal</h1>
-          <p className="page-subtitle">Track your emotional well-being and daily energy fluctuations</p>
+          <h1 className="page-title">Vibe & Energy Journal</h1>
+          <p className="page-subtitle">Track how study load, exams, and rest impact your daily mental clarity</p>
         </div>
       </div>
 
@@ -69,7 +68,7 @@ export default function MoodJournal({ moodLogs, addMoodLog }) {
         <div className="glass-card mood-form-card">
           <div className="card-title-row">
             <BookOpen className="icon-title" size={20} />
-            <h2 className="card-title">Log Today's State</h2>
+            <h2 className="card-title">How's your day going?</h2>
           </div>
 
           <form onSubmit={handleSubmit} className="mood-form">
@@ -94,7 +93,7 @@ export default function MoodJournal({ moodLogs, addMoodLog }) {
             {/* Energy Slider */}
             <div className="form-group">
               <div className="slider-header">
-                <label>Energy Level: <strong>{energyLevel}/10</strong></label>
+                <label>Study Energy Level: <strong>{energyLevel}/10</strong></label>
                 <Zap size={18} className="energy-icon" />
               </div>
               <input 
@@ -106,15 +105,15 @@ export default function MoodJournal({ moodLogs, addMoodLog }) {
                 className="energy-slider"
               />
               <div className="slider-labels">
-                <span>Exhausted</span>
-                <span>Moderate</span>
-                <span>Peak Energy</span>
+                <span>Burnout Risk</span>
+                <span>Moderate Focus</span>
+                <span>Peak Brain Power</span>
               </div>
             </div>
 
             {/* Tags selection */}
             <div className="form-group">
-              <label>Influencing Factors</label>
+              <label>What influenced your energy today?</label>
               <div className="tags-flex">
                 {tagOptions.map((tag) => (
                   <button
@@ -131,10 +130,10 @@ export default function MoodJournal({ moodLogs, addMoodLog }) {
 
             {/* Reflection notes */}
             <div className="form-group">
-              <label>Reflection Notes</label>
+              <label>Daily Reflection Note</label>
               <textarea 
                 rows="3" 
-                placeholder="What contributed to your mood today? Any insights or gratitude?" 
+                placeholder="How did lectures, study sessions, or team meetings go today? Any wins or thoughts?" 
                 value={note}
                 onChange={(e) => setNote(e.target.value)}
                 className="textarea-field"
@@ -142,7 +141,7 @@ export default function MoodJournal({ moodLogs, addMoodLog }) {
             </div>
 
             <button type="submit" className="btn btn-primary submit-btn">
-              <Plus size={18} /> Save Entry
+              <Plus size={18} /> Save Journal Entry
             </button>
           </form>
         </div>
@@ -151,7 +150,7 @@ export default function MoodJournal({ moodLogs, addMoodLog }) {
         <div className="glass-card timeline-card">
           <div className="card-title-row">
             <Clock className="icon-title" size={20} />
-            <h2 className="card-title">Recent Entries</h2>
+            <h2 className="card-title">Recent Vibe Log</h2>
           </div>
 
           <div className="timeline-list">

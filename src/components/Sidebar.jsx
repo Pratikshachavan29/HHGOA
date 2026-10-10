@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   LayoutDashboard, 
   CheckSquare, 
@@ -9,17 +9,39 @@ import {
   Sun, 
   Moon, 
   Sparkles,
-  Zap
+  ChevronUp,
+  UserPlus,
+  Check
 } from 'lucide-react';
+import AddUserModal from './AddUserModal';
 
-export default function Sidebar({ activeTab, setActiveTab, theme, toggleTheme }) {
+export default function Sidebar({ 
+  activeTab, 
+  setActiveTab, 
+  theme, 
+  toggleTheme,
+  users,
+  currentUserId,
+  switchUser,
+  addUser
+}) {
+  const [showUserDropdown, setShowUserDropdown] = useState(false);
+  const [showAddUserModal, setShowAddUserModal] = useState(false);
+
+  const activeUser = users.find(u => u.id === currentUserId) || users[0] || {
+    name: 'Priya',
+    role: 'CS Student',
+    avatarColor: '#6366f1',
+    avatarEmoji: '🎓'
+  };
+
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, badge: null },
-    { id: 'habits', label: 'Habits Tracker', icon: CheckSquare, badge: 'Daily' },
-    { id: 'mood', label: 'Mood & Energy', icon: Smile, badge: null },
-    { id: 'goals', label: 'Life Goals', icon: Target, badge: null },
-    { id: 'focus', label: 'Focus Timer', icon: Timer, badge: 'Pomo' },
-    { id: 'analytics', label: 'Analytics', icon: BarChart3, badge: null },
+    { id: 'habits', label: 'Daily Routines', icon: CheckSquare, badge: 'Study' },
+    { id: 'mood', label: 'Vibe & Energy', icon: Smile, badge: null },
+    { id: 'goals', label: 'Projects & Deadlines', icon: Target, badge: null },
+    { id: 'focus', label: 'Focus Sprints', icon: Timer, badge: '25m' },
+    { id: 'analytics', label: 'My Progress', icon: BarChart3, badge: null },
   ];
 
   return (
@@ -31,7 +53,7 @@ export default function Sidebar({ activeTab, setActiveTab, theme, toggleTheme })
         </div>
         <div className="brand-text">
           <h1 className="brand-title">LifeLens</h1>
-          <span className="brand-subtitle">Personal HQ</span>
+          <span className="brand-subtitle">Student HQ</span>
         </div>
       </div>
 
@@ -45,7 +67,6 @@ export default function Sidebar({ activeTab, setActiveTab, theme, toggleTheme })
               key={item.id}
               onClick={() => setActiveTab(item.id)}
               className={`nav-item ${isActive ? 'active' : ''}`}
-
             >
               <Icon size={20} className="nav-icon" />
               <span className="nav-label">{item.label}</span>
@@ -55,23 +76,81 @@ export default function Sidebar({ activeTab, setActiveTab, theme, toggleTheme })
         })}
       </nav>
 
-      {/* Footer / Theme Toggle */}
+      {/* User Switcher & Theme Footer */}
       <div className="sidebar-footer">
-        <div className="user-profile-card">
-          <div className="avatar">
-            <Zap size={18} />
-          </div>
-          <div className="user-info">
-            <span className="user-name">Alex Rivera</span>
-            <span className="user-tier">Pro Life Plan</span>
-          </div>
+        {/* User Profile Selector Card */}
+        <div className="user-profile-wrapper">
+          <button 
+            onClick={() => setShowUserDropdown(!showUserDropdown)} 
+            className="user-profile-card interactive"
+            title="Click to switch or add profile"
+          >
+            <div className="avatar" style={{ background: activeUser.avatarColor || '#6366f1' }}>
+              <span>{activeUser.avatarEmoji || '🎓'}</span>
+            </div>
+            <div className="user-info">
+              <span className="user-name">{activeUser.name}</span>
+              <span className="user-tier">{activeUser.role}</span>
+            </div>
+            <ChevronUp size={16} className={`chevron-icon ${showUserDropdown ? 'open' : ''}`} />
+          </button>
+
+          {/* Switch User Dropdown */}
+          {showUserDropdown && (
+            <div className="user-dropdown-popover glass-card animate-fade-in">
+              <div className="dropdown-header">
+                <span>Switch Student Profile</span>
+              </div>
+
+              <div className="user-list">
+                {users.map((u) => (
+                  <button
+                    key={u.id}
+                    onClick={() => {
+                      switchUser(u.id);
+                      setShowUserDropdown(false);
+                    }}
+                    className={`user-option ${u.id === currentUserId ? 'active' : ''}`}
+                  >
+                    <div className="avatar-sm" style={{ background: u.avatarColor || '#6366f1' }}>
+                      {u.avatarEmoji || '🎓'}
+                    </div>
+                    <div className="user-option-info">
+                      <span className="u-name">{u.name}</span>
+                      <span className="u-role">{u.role}</span>
+                    </div>
+                    {u.id === currentUserId && <Check size={14} className="check-icon" />}
+                  </button>
+                ))}
+              </div>
+
+              <button 
+                onClick={() => {
+                  setShowUserDropdown(false);
+                  setShowAddUserModal(true);
+                }} 
+                className="add-user-btn"
+              >
+                <UserPlus size={16} />
+                <span>Add New Profile</span>
+              </button>
+            </div>
+          )}
         </div>
 
+        {/* Theme Toggle Button */}
         <button onClick={toggleTheme} className="theme-toggle-btn" title="Toggle Theme">
           {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
           <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
         </button>
       </div>
+
+      {/* Add User Modal */}
+      <AddUserModal 
+        isOpen={showAddUserModal}
+        onClose={() => setShowAddUserModal(false)}
+        onAddUser={addUser}
+      />
 
       <style>{`
         .sidebar-container {
@@ -185,41 +264,182 @@ export default function Sidebar({ activeTab, setActiveTab, theme, toggleTheme })
           gap: 0.75rem;
         }
 
+        .user-profile-wrapper {
+          position: relative;
+        }
+
         .user-profile-card {
           display: flex;
           align-items: center;
           gap: 0.75rem;
-          padding: 0.6rem 0.75rem;
-          background: rgba(0, 0, 0, 0.15);
+          padding: 0.65rem 0.75rem;
+          background: rgba(0, 0, 0, 0.2);
           border-radius: var(--radius-md);
           border: 1px solid var(--border-color);
+          width: 100%;
+          text-align: left;
+          color: inherit;
+          cursor: pointer;
+          transition: all var(--transition-fast);
+        }
+
+        .user-profile-card:hover {
+          background: rgba(255, 255, 255, 0.06);
+          border-color: rgba(255, 255, 255, 0.2);
         }
 
         .avatar {
-          width: 34px;
-          height: 34px;
+          width: 36px;
+          height: 36px;
           border-radius: var(--radius-full);
-          background: var(--gradient-teal);
           display: flex;
           align-items: center;
           justify-content: center;
-          color: white;
+          font-size: 1.1rem;
+          flex-shrink: 0;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
         .user-info {
           display: flex;
           flex-direction: column;
+          flex: 1;
+          overflow: hidden;
         }
 
         .user-name {
-          font-size: 0.85rem;
+          font-size: 0.88rem;
           font-weight: 700;
           color: var(--text-main);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
 
         .user-tier {
-          font-size: 0.7rem;
+          font-size: 0.72rem;
           color: var(--text-muted);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .chevron-icon {
+          color: var(--text-muted);
+          transition: transform 0.2s ease;
+        }
+
+        .chevron-icon.open {
+          transform: rotate(180deg);
+        }
+
+        /* User Dropdown Popover */
+        .user-dropdown-popover {
+          position: absolute;
+          bottom: 100%;
+          left: 0;
+          right: 0;
+          margin-bottom: 0.5rem;
+          padding: 0.75rem;
+          z-index: 100;
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          box-shadow: var(--shadow-lg);
+          border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .dropdown-header {
+          font-size: 0.75rem;
+          font-weight: 700;
+          color: var(--text-muted);
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          padding: 0.25rem 0.4rem;
+        }
+
+        .user-list {
+          display: flex;
+          flex-direction: column;
+          gap: 0.35rem;
+          max-height: 180px;
+          overflow-y: auto;
+        }
+
+        .user-option {
+          display: flex;
+          align-items: center;
+          gap: 0.65rem;
+          padding: 0.5rem 0.6rem;
+          border-radius: var(--radius-md);
+          background: transparent;
+          border: 1px solid transparent;
+          color: var(--text-main);
+          cursor: pointer;
+          transition: all var(--transition-fast);
+          width: 100%;
+          text-align: left;
+        }
+
+        .user-option:hover {
+          background: rgba(255, 255, 255, 0.08);
+        }
+
+        .user-option.active {
+          background: rgba(99, 102, 241, 0.15);
+          border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .avatar-sm {
+          width: 26px;
+          height: 26px;
+          border-radius: var(--radius-full);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.85rem;
+          flex-shrink: 0;
+        }
+
+        .user-option-info {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+        }
+
+        .u-name {
+          font-size: 0.82rem;
+          font-weight: 700;
+        }
+
+        .u-role {
+          font-size: 0.68rem;
+          color: var(--text-muted);
+        }
+
+        .check-icon {
+          color: var(--accent-primary);
+        }
+
+        .add-user-btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          padding: 0.55rem;
+          border-radius: var(--radius-md);
+          background: var(--gradient-primary);
+          color: white;
+          border: none;
+          font-weight: 600;
+          font-size: 0.82rem;
+          cursor: pointer;
+          transition: opacity var(--transition-fast);
+          margin-top: 0.25rem;
+        }
+
+        .add-user-btn:hover {
+          opacity: 0.9;
         }
 
         .theme-toggle-btn {

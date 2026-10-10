@@ -7,24 +7,24 @@ import {
   TrendingUp, 
   Quote, 
   ArrowRight,
-  Plus,
-  Sparkles
+  Sparkles,
+  BookOpen
 } from 'lucide-react';
 
-export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusTime, setActiveTab }) {
+export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusTime, setActiveTab, userName = 'Priya' }) {
   // Calculate completion statistics
   const completedTodayCount = habits.filter(h => h.completedToday).length;
   const habitCompletionRate = habits.length > 0 ? Math.round((completedTodayCount / habits.length) * 100) : 0;
   
-  const latestMood = moodLogs.length > 0 ? moodLogs[0] : { rating: 'Good', emoji: '😊', score: 4 };
+  const latestMood = moodLogs.length > 0 ? moodLogs[0] : { rating: 'Productive', emoji: '⚡', score: 4 };
   const totalFocusMinutes = Math.round(focusTime / 60);
 
-  const quotes = [
-    { text: "We are what we repeatedly do. Excellence, then, is not an act, but a habit.", author: "Will Durant" },
-    { text: "Do not wait; the time will never be 'just right'. Start where you stand.", author: "Napoleon Hill" },
-    { text: "Your time is limited, don't waste it living someone else's life.", author: "Steve Jobs" }
+  const studentQuotes = [
+    { text: "Small daily efforts compound into major exam, interview, and project wins.", author: "Campus Wisdom" },
+    { text: "It always seems impossible until it's done.", author: "Nelson Mandela" },
+    { text: "Focus on progress, not perfection. One study sprint at a time.", author: "Student Pro Tip" }
   ];
-  const dailyQuote = quotes[0];
+  const dailyQuote = studentQuotes[0];
 
   return (
     <div className="dashboard-wrapper animate-fade-in">
@@ -32,13 +32,13 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
       <div className="glass-card hero-card">
         <div className="hero-content">
           <span className="badge badge-indigo">
-            <Sparkles size={12} /> Today's Overview
+            <Sparkles size={12} /> Student Dashboard
           </span>
           <h1 className="hero-title">
-            Welcome Back, <span className="title-gradient">Alex</span> 👋
+            Hey <span className="title-gradient">{userName}</span>! Ready to crush today? 🚀
           </h1>
           <p className="hero-subtitle">
-            You've completed <strong className="text-highlight">{completedTodayCount} of {habits.length}</strong> habits today. Keep up your momentum!
+            You've completed <strong className="text-highlight">{completedTodayCount} of {habits.length}</strong> tasks today. Keep up your momentum!
           </p>
         </div>
         <div className="score-ring-container">
@@ -54,7 +54,7 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
             </svg>
             <div className="score-text">
               <span className="score-number">{habitCompletionRate}%</span>
-              <span className="score-label">Life Score</span>
+              <span className="score-label">Study Score</span>
             </div>
           </div>
         </div>
@@ -68,7 +68,7 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
           </div>
           <div className="metric-data">
             <span className="metric-value">{completedTodayCount}/{habits.length}</span>
-            <span className="metric-title">Habits Done</span>
+            <span className="metric-title">Tasks Crushed</span>
           </div>
         </div>
 
@@ -78,7 +78,7 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
           </div>
           <div className="metric-data">
             <span className="metric-value">7 Days</span>
-            <span className="metric-title">Streak Master</span>
+            <span className="metric-title">Study Streak</span>
           </div>
         </div>
 
@@ -88,7 +88,7 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
           </div>
           <div className="metric-data">
             <span className="metric-value">{latestMood.emoji} {latestMood.rating}</span>
-            <span className="metric-title">Current Mood</span>
+            <span className="metric-title">Current Vibe</span>
           </div>
         </div>
 
@@ -98,7 +98,7 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
           </div>
           <div className="metric-data">
             <span className="metric-value">{totalFocusMinutes} mins</span>
-            <span className="metric-title">Focus Session</span>
+            <span className="metric-title">Focus Logged</span>
           </div>
         </div>
       </div>
@@ -109,17 +109,17 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
         <div className="glass-card section-card">
           <div className="section-header">
             <div>
-              <h2 className="section-title">Today's Habits</h2>
-              <p className="section-sub">Quick check-in for active routines</p>
+              <h2 className="section-title">Today's Academic & Personal Checklist</h2>
+              <p className="section-sub">Quick check-in for active student routines</p>
             </div>
-            <button onClick={() => setActiveTab('habits')} className="btn-icon" title="View all habits">
+            <button onClick={() => setActiveTab('habits')} className="btn-icon" title="View all routines">
               <ArrowRight size={18} />
             </button>
           </div>
 
           <div className="habits-quick-list">
             {habits.length === 0 ? (
-              <p className="empty-text">No habits created yet.</p>
+              <p className="empty-text">No tasks created yet.</p>
             ) : (
               habits.slice(0, 4).map((habit) => (
                 <div key={habit.id} className={`habit-item ${habit.completedToday ? 'completed' : ''}`}>
@@ -145,8 +145,8 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
         <div className="glass-card section-card">
           <div className="section-header">
             <div>
-              <h2 className="section-title">Active Goals</h2>
-              <p className="section-sub">Milestones you are working towards</p>
+              <h2 className="section-title">Projects & Milestones</h2>
+              <p className="section-sub">Upcoming assignment & career targets</p>
             </div>
             <button onClick={() => setActiveTab('goals')} className="btn-icon" title="View all goals">
               <ArrowRight size={18} />
@@ -233,7 +233,6 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
 
         .circle-fill {
           fill: none;
-          stroke: url(#gradient);
           stroke: #6366f1;
           stroke-width: 3.8;
           stroke-linecap: round;

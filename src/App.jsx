@@ -11,64 +11,122 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [theme, setTheme] = useState('dark');
 
-  // Initial Habits Data
-  const initialHabits = [
-    { id: 1, name: 'Morning Meditation (10m)', category: 'Mind', streak: 12, completedToday: true, weekly: [true, true, true, true, false, false, false] },
-    { id: 2, name: 'Drink 2.5L Water', category: 'Health', streak: 8, completedToday: true, weekly: [true, true, false, true, true, false, false] },
-    { id: 3, name: 'Read 20 Pages', category: 'Personal', streak: 5, completedToday: false, weekly: [true, false, true, false, false, false, false] },
-    { id: 4, name: '30 Min Fitness / Workout', category: 'Fitness', streak: 14, completedToday: false, weekly: [true, true, true, false, false, false, false] },
+  // Default initial users
+  const defaultUsers = [
+    { id: '1', name: 'Priya', role: 'CS Student', avatarColor: '#6366f1', avatarEmoji: '🎓' },
+    { id: '2', name: 'Alex', role: 'Pre-Med Major', avatarColor: '#10b981', avatarEmoji: '🔬' }
   ];
 
-  // Initial Mood Logs
-  const initialMoodLogs = [
-    { id: 1, rating: 'Joyful', emoji: '😊', score: 5, energy: 8, tags: ['Health', 'Exercise'], note: 'Completed morning run and felt energized!', date: 'Oct 5, 2026', time: '09:30 AM' },
-    { id: 2, rating: 'Productive', emoji: '⚡', score: 4, energy: 9, tags: ['Work'], note: 'Finished main React architecture tasks.', date: 'Oct 4, 2026', time: '05:15 PM' },
+  // Load or initialize users state
+  const [users, setUsers] = useState(() => {
+    const saved = localStorage.getItem('lifelens_users');
+    return saved ? JSON.parse(saved) : defaultUsers;
+  });
+
+  // Current active user ID
+  const [currentUserId, setCurrentUserId] = useState(() => {
+    const saved = localStorage.getItem('lifelens_active_user_id');
+    return saved && users.some(u => u.id === saved) ? saved : users[0].id;
+  });
+
+  const activeUser = users.find(u => u.id === currentUserId) || users[0];
+
+  // Default sample data generator for new users
+  const getInitialHabitsForUser = (userName) => [
+    { id: 1, name: 'Solve 1 LeetCode / Tech Prep Problem', category: 'Prep & Work', streak: 12, completedToday: true, weekly: [true, true, true, true, false, false, false] },
+    { id: 2, name: `Review Notes for ${userName}'s Exams`, category: 'Academics', streak: 8, completedToday: true, weekly: [true, true, false, true, true, false, false] },
+    { id: 3, name: 'Work on Capstone Group Project Draft', category: 'Projects', streak: 5, completedToday: false, weekly: [true, false, true, false, false, false, false] },
+    { id: 4, name: 'Hydrate & 15m Campus Walk', category: 'Self Care', streak: 14, completedToday: false, weekly: [true, true, true, false, false, false, false] },
   ];
 
-  // Initial Goals Data
-  const initialGoals = [
-    { id: 1, title: 'Master React & Web Architecture', category: 'Career', targetDate: 'Nov 30, 2026', progress: 75 },
-    { id: 2, title: 'Run a 10K Marathon', category: 'Health', targetDate: 'Dec 15, 2026', progress: 50 },
-    { id: 3, title: 'Build $5,000 Emergency Fund', category: 'Finance', targetDate: 'Jan 31, 2027', progress: 30 },
+  const getInitialMoodLogsForUser = () => [
+    { id: 1, rating: 'Productive', emoji: '⚡', score: 4, energy: 8, tags: ['Projects', 'Coffee ☕'], note: 'Nailed the assignment draft & finished study sprints!', date: 'Oct 5, 2026', time: '02:30 PM' },
+    { id: 2, rating: 'Calm', emoji: '😌', score: 4, energy: 7, tags: ['Friends', 'Sleep'], note: 'Great study session at the library with the team.', date: 'Oct 4, 2026', time: '08:15 PM' },
   ];
 
-  // State with LocalStorage fallbacks
+  const getInitialGoalsForUser = () => [
+    { id: 1, title: 'Land Summer Software Engineering Internship', category: 'Career & Jobs', targetDate: 'Dec 15, 2026', progress: 70 },
+    { id: 2, title: 'Submit Capstone Project Phase 1', category: 'Projects', targetDate: 'Nov 20, 2026', progress: 85 },
+    { id: 3, title: 'Maintain 3.8+ GPA this Semester', category: 'Academics', targetDate: 'Dec 30, 2026', progress: 60 },
+  ];
+
+  // Per-user habits state
   const [habits, setHabits] = useState(() => {
-    const saved = localStorage.getItem('lifelens_habits');
-    return saved ? JSON.parse(saved) : initialHabits;
+    const saved = localStorage.getItem(`lifelens_habits_user_${currentUserId}`);
+    return saved ? JSON.parse(saved) : getInitialHabitsForUser(activeUser.name);
   });
 
+  // Per-user mood logs state
   const [moodLogs, setMoodLogs] = useState(() => {
-    const saved = localStorage.getItem('lifelens_moods');
-    return saved ? JSON.parse(saved) : initialMoodLogs;
+    const saved = localStorage.getItem(`lifelens_moods_user_${currentUserId}`);
+    return saved ? JSON.parse(saved) : getInitialMoodLogsForUser();
   });
 
+  // Per-user goals state
   const [goals, setGoals] = useState(() => {
-    const saved = localStorage.getItem('lifelens_goals');
-    return saved ? JSON.parse(saved) : initialGoals;
+    const saved = localStorage.getItem(`lifelens_goals_user_${currentUserId}`);
+    return saved ? JSON.parse(saved) : getInitialGoalsForUser();
   });
 
+  // Per-user focus time state
   const [focusTime, setFocusTime] = useState(() => {
-    const saved = localStorage.getItem('lifelens_focustime');
-    return saved ? JSON.parse(saved) : 4500; // 75 mins in seconds default
+    const saved = localStorage.getItem(`lifelens_focustime_user_${currentUserId}`);
+    return saved ? JSON.parse(saved) : 5400; // 90 mins default
   });
 
-  // Sync state changes to LocalStorage
+  // Save users list to localStorage
   useEffect(() => {
-    localStorage.setItem('lifelens_habits', JSON.stringify(habits));
-  }, [habits]);
+    localStorage.setItem('lifelens_users', JSON.stringify(users));
+  }, [users]);
+
+  // Save active user ID to localStorage
+  useEffect(() => {
+    localStorage.setItem('lifelens_active_user_id', currentUserId);
+  }, [currentUserId]);
+
+  // Reload user-specific data when active user changes
+  useEffect(() => {
+    const savedHabits = localStorage.getItem(`lifelens_habits_user_${currentUserId}`);
+    setHabits(savedHabits ? JSON.parse(savedHabits) : getInitialHabitsForUser(activeUser.name));
+
+    const savedMoods = localStorage.getItem(`lifelens_moods_user_${currentUserId}`);
+    setMoodLogs(savedMoods ? JSON.parse(savedMoods) : getInitialMoodLogsForUser());
+
+    const savedGoals = localStorage.getItem(`lifelens_goals_user_${currentUserId}`);
+    setGoals(savedGoals ? JSON.parse(savedGoals) : getInitialGoalsForUser());
+
+    const savedFocus = localStorage.getItem(`lifelens_focustime_user_${currentUserId}`);
+    setFocusTime(savedFocus ? JSON.parse(savedFocus) : 5400);
+  }, [currentUserId]);
+
+  // Save data per user
+  useEffect(() => {
+    localStorage.setItem(`lifelens_habits_user_${currentUserId}`, JSON.stringify(habits));
+  }, [habits, currentUserId]);
 
   useEffect(() => {
-    localStorage.setItem('lifelens_moods', JSON.stringify(moodLogs));
-  }, [moodLogs]);
+    localStorage.setItem(`lifelens_moods_user_${currentUserId}`, JSON.stringify(moodLogs));
+  }, [moodLogs, currentUserId]);
 
   useEffect(() => {
-    localStorage.setItem('lifelens_goals', JSON.stringify(goals));
-  }, [goals]);
+    localStorage.setItem(`lifelens_goals_user_${currentUserId}`, JSON.stringify(goals));
+  }, [goals, currentUserId]);
 
   useEffect(() => {
-    localStorage.setItem('lifelens_focustime', JSON.stringify(focusTime));
-  }, [focusTime]);
+    localStorage.setItem(`lifelens_focustime_user_${currentUserId}`, JSON.stringify(focusTime));
+  }, [focusTime, currentUserId]);
+
+  // Add new user profile
+  const handleAddUser = (newUser) => {
+    const updatedUsers = [...users, newUser];
+    setUsers(updatedUsers);
+    setCurrentUserId(newUser.id);
+  };
+
+  // Switch active user
+  const handleSwitchUser = (userId) => {
+    setCurrentUserId(userId);
+  };
 
   // Handle Theme Toggle
   const toggleTheme = () => {
@@ -132,7 +190,11 @@ export default function App() {
         activeTab={activeTab} 
         setActiveTab={setActiveTab} 
         theme={theme} 
-        toggleTheme={toggleTheme} 
+        toggleTheme={toggleTheme}
+        users={users}
+        currentUserId={currentUserId}
+        switchUser={handleSwitchUser}
+        addUser={handleAddUser}
       />
 
       <main className="main-content">
@@ -144,6 +206,7 @@ export default function App() {
             goals={goals} 
             focusTime={focusTime}
             setActiveTab={setActiveTab}
+            userName={activeUser.name}
           />
         )}
 

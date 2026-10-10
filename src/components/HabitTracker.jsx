@@ -8,17 +8,17 @@ import {
   Tag, 
   Sparkles,
   Search,
-  Filter
+  BookOpen
 } from 'lucide-react';
 
 export default function HabitTracker({ habits, toggleHabit, addHabit, deleteHabit }) {
   const [showAddModal, setShowAddModal] = useState(false);
   const [newHabitName, setNewHabitName] = useState('');
-  const [newHabitCategory, setNewHabitCategory] = useState('Health');
+  const [newHabitCategory, setNewHabitCategory] = useState('Academics');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const categories = ['All', 'Health', 'Mind', 'Fitness', 'Career', 'Personal'];
+  const categories = ['All', 'Academics', 'Prep & Work', 'Projects', 'Self Care', 'Personal'];
 
   const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -47,11 +47,11 @@ export default function HabitTracker({ habits, toggleHabit, addHabit, deleteHabi
       {/* Header & Actions */}
       <div className="page-header">
         <div>
-          <h1 className="page-title">Habit Tracker</h1>
-          <p className="page-subtitle">Build consistency and transform your daily routines</p>
+          <h1 className="page-title">Daily Student Routines & Tasks</h1>
+          <p className="page-subtitle">Stay on top of assignments, interview prep, and self-care without burning out</p>
         </div>
         <button onClick={() => setShowAddModal(true)} className="btn btn-primary">
-          <Plus size={18} /> Add New Habit
+          <Plus size={18} /> Add Task / Routine
         </button>
       </div>
 
@@ -73,7 +73,7 @@ export default function HabitTracker({ habits, toggleHabit, addHabit, deleteHabi
           <Search size={16} className="search-icon" />
           <input 
             type="text" 
-            placeholder="Search habits..." 
+            placeholder="Search assignments or habits..." 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="input-field search-input"
@@ -85,16 +85,16 @@ export default function HabitTracker({ habits, toggleHabit, addHabit, deleteHabi
       <div className="habits-list">
         {filteredHabits.length === 0 ? (
           <div className="glass-card empty-state-card">
-            <Sparkles size={40} className="empty-icon" />
-            <h3>No Habits Found</h3>
-            <p>Start your journey by adding your first daily habit.</p>
+            <BookOpen size={40} className="empty-icon" />
+            <h3>No Tasks Found</h3>
+            <p>Add your first study goal, LeetCode problem, or lab report routine.</p>
           </div>
         ) : (
           filteredHabits.map((habit) => (
             <div key={habit.id} className="glass-card habit-card">
               <div className="habit-header-row">
                 <div className="habit-info">
-                  <span className={`badge badge-category badge-${habit.category.toLowerCase()}`}>
+                  <span className={`badge badge-category badge-${habit.category.toLowerCase().replace(/[^a-z0-9]/g, '')}`}>
                     {habit.category}
                   </span>
                   <h3 className="habit-title">{habit.name}</h3>
@@ -108,7 +108,7 @@ export default function HabitTracker({ habits, toggleHabit, addHabit, deleteHabi
                   <button 
                     onClick={() => deleteHabit(habit.id)} 
                     className="btn-icon delete-btn" 
-                    title="Delete habit"
+                    title="Delete task"
                   >
                     <Trash2 size={16} />
                   </button>
@@ -117,7 +117,7 @@ export default function HabitTracker({ habits, toggleHabit, addHabit, deleteHabi
 
               {/* Weekly Tracker Bubbles */}
               <div className="weekly-matrix">
-                <span className="matrix-label">This Week:</span>
+                <span className="matrix-label">This Week's Progress:</span>
                 <div className="days-row">
                   {daysOfWeek.map((day, idx) => {
                     const isToday = idx === 3; // Example today is Thursday
@@ -147,13 +147,13 @@ export default function HabitTracker({ habits, toggleHabit, addHabit, deleteHabi
       {showAddModal && (
         <div className="modal-overlay">
           <div className="glass-card modal-card animate-fade-in">
-            <h2 className="modal-title">Create New Habit</h2>
+            <h2 className="modal-title">Add Student Task / Habit</h2>
             <form onSubmit={handleCreate} className="modal-form">
               <div className="form-group">
-                <label>Habit Name</label>
+                <label>Task / Habit Name</label>
                 <input 
                   type="text" 
-                  placeholder="e.g. Read 20 pages, Morning Jog" 
+                  placeholder="e.g. Solve 1 LeetCode problem, Submit Lab Report, 20m Workout" 
                   value={newHabitName}
                   onChange={(e) => setNewHabitName(e.target.value)}
                   className="input-field"
@@ -169,10 +169,10 @@ export default function HabitTracker({ habits, toggleHabit, addHabit, deleteHabi
                   onChange={(e) => setNewHabitCategory(e.target.value)}
                   className="select-field"
                 >
-                  <option value="Health">Health</option>
-                  <option value="Mind">Mind</option>
-                  <option value="Fitness">Fitness</option>
-                  <option value="Career">Career</option>
+                  <option value="Academics">Academics</option>
+                  <option value="Prep & Work">Prep & Work</option>
+                  <option value="Projects">Projects</option>
+                  <option value="Self Care">Self Care</option>
                   <option value="Personal">Personal</option>
                 </select>
               </div>
@@ -186,7 +186,7 @@ export default function HabitTracker({ habits, toggleHabit, addHabit, deleteHabi
                   Cancel
                 </button>
                 <button type="submit" className="btn btn-primary">
-                  Save Habit
+                  Save Routine
                 </button>
               </div>
             </form>
@@ -257,7 +257,7 @@ export default function HabitTracker({ habits, toggleHabit, addHabit, deleteHabi
 
         .search-box {
           position: relative;
-          width: 240px;
+          width: 260px;
         }
 
         .search-icon {
@@ -306,10 +306,10 @@ export default function HabitTracker({ habits, toggleHabit, addHabit, deleteHabi
           width: max-content;
         }
 
-        .badge-health { background: rgba(16, 185, 129, 0.15); color: #34d399; }
-        .badge-mind { background: rgba(99, 102, 241, 0.15); color: #818cf8; }
-        .badge-fitness { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
-        .badge-career { background: rgba(139, 92, 246, 0.15); color: #c084fc; }
+        .badge-academics { background: rgba(99, 102, 241, 0.15); color: #818cf8; }
+        .badge-prepwork { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+        .badge-projects { background: rgba(139, 92, 246, 0.15); color: #c084fc; }
+        .badge-selfcare { background: rgba(16, 185, 129, 0.15); color: #34d399; }
         .badge-personal { background: rgba(244, 63, 94, 0.15); color: #fb7185; }
 
         .habit-actions {

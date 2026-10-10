@@ -6,13 +6,14 @@ import {
   Calendar, 
   CheckCircle2, 
   TrendingUp,
-  Sparkles
+  Sparkles,
+  GraduationCap
 } from 'lucide-react';
 
 export default function GoalsTracker({ goals, addGoal, updateGoalProgress, deleteGoal }) {
   const [showModal, setShowModal] = useState(false);
   const [title, setTitle] = useState('');
-  const [category, setCategory] = useState('Career');
+  const [category, setCategory] = useState('Career & Jobs');
   const [targetDate, setTargetDate] = useState('');
   const [initialProgress, setInitialProgress] = useState(0);
 
@@ -36,20 +37,20 @@ export default function GoalsTracker({ goals, addGoal, updateGoalProgress, delet
     <div className="goals-tracker-container animate-fade-in">
       <div className="page-header">
         <div>
-          <h1 className="page-title">Life Goals & Milestones</h1>
-          <p className="page-subtitle">Track your long-term ambitions and break them down into measurable milestones</p>
+          <h1 className="page-title">Semester Goals & Major Milestones</h1>
+          <p className="page-subtitle">Keep your eye on upcoming project deadlines, career milestones, and life targets</p>
         </div>
         <button onClick={() => setShowModal(true)} className="btn btn-primary">
-          <Plus size={18} /> Add New Goal
+          <Plus size={18} /> Add Goal / Deadline
         </button>
       </div>
 
       <div className="grid-2 goals-grid">
         {goals.length === 0 ? (
           <div className="glass-card empty-goals-card">
-            <Target size={44} className="empty-icon" />
+            <GraduationCap size={44} className="empty-icon" />
             <h3>No Goals Set Yet</h3>
-            <p>Define your vision and set your first life milestone.</p>
+            <p>Add your first academic target, internship deadline, or capstone milestone.</p>
           </div>
         ) : (
           goals.map((goal) => (
@@ -72,7 +73,7 @@ export default function GoalsTracker({ goals, addGoal, updateGoalProgress, delet
               {/* Interactive Progress Slider */}
               <div className="progress-section">
                 <div className="progress-label-row">
-                  <span className="progress-title">Completion Progress</span>
+                  <span className="progress-title">Milestone Progress</span>
                   <span className="progress-val">{goal.progress}%</span>
                 </div>
 
@@ -92,7 +93,7 @@ export default function GoalsTracker({ goals, addGoal, updateGoalProgress, delet
 
               {goal.progress === 100 && (
                 <div className="completed-badge">
-                  <CheckCircle2 size={16} /> Goal Completed! 🎉
+                  <CheckCircle2 size={16} /> Target Achieved! 🎉
                 </div>
               )}
             </div>
@@ -104,13 +105,13 @@ export default function GoalsTracker({ goals, addGoal, updateGoalProgress, delet
       {showModal && (
         <div className="modal-overlay">
           <div className="glass-card modal-card animate-fade-in">
-            <h2 className="modal-title">Set New Life Goal</h2>
+            <h2 className="modal-title">Set Semester Goal / Deadline</h2>
             <form onSubmit={handleSubmit} className="modal-form">
               <div className="form-group">
                 <label>Goal Title</label>
                 <input 
                   type="text" 
-                  placeholder="e.g. Save $10k, Learn Spanish, Run Marathon" 
+                  placeholder="e.g. Land Summer Internship, Finish ML Capstone, Maintain 3.8 GPA" 
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   className="input-field"
@@ -125,9 +126,9 @@ export default function GoalsTracker({ goals, addGoal, updateGoalProgress, delet
                   onChange={(e) => setCategory(e.target.value)}
                   className="select-field"
                 >
-                  <option value="Career">Career</option>
-                  <option value="Health">Health</option>
-                  <option value="Finance">Finance</option>
+                  <option value="Career & Jobs">Career & Jobs</option>
+                  <option value="Academics">Academics</option>
+                  <option value="Projects">Projects</option>
                   <option value="Personal">Personal</option>
                 </select>
               </div>
