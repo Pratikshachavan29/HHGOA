@@ -12,11 +12,11 @@ import {
 
 export default function MoodJournal({ moodLogs, addMoodLog }) {
   const moodOptions = [
-    { label: 'Joyful', emoji: '😊', score: 5, color: '#10b981' },
+    { label: 'Joyful', emoji: '😊', score: 5, color: '#059669' },
     { label: 'Calm', emoji: '😌', score: 4, color: '#3b82f6' },
-    { label: 'Productive', emoji: '⚡', score: 4, color: '#8b5cf6' },
-    { label: 'Tired', emoji: '😴', score: 2, color: '#f59e0b' },
-    { label: 'Stressed', emoji: '🤯', score: 1, color: '#ef4444' }
+    { label: 'Productive', emoji: '⚡', score: 4, color: '#7c3aed' },
+    { label: 'Tired', emoji: '😴', score: 2, color: '#d97706' },
+    { label: 'Stressed', emoji: '🤯', score: 1, color: '#e11d48' }
   ];
 
   const tagOptions = ['Exams', 'Projects', 'Interviews', 'Coffee ☕', 'Sleep', 'Friends', 'Exercise'];
@@ -199,12 +199,13 @@ export default function MoodJournal({ moodLogs, addMoodLog }) {
         }
 
         .icon-title {
-          color: var(--accent-primary);
+          color: #7c3aed;
         }
 
         .card-title {
           font-size: 1.2rem;
           font-weight: 700;
+          color: #18181b;
         }
 
         .mood-form {
@@ -226,7 +227,7 @@ export default function MoodJournal({ moodLogs, addMoodLog }) {
           align-items: center;
           gap: 0.35rem;
           padding: 0.75rem 0.5rem;
-          background: rgba(0, 0, 0, 0.2);
+          background: #ffffff;
           border: 1px solid var(--border-color);
           border-radius: var(--radius-md);
           cursor: pointer;
@@ -234,14 +235,14 @@ export default function MoodJournal({ moodLogs, addMoodLog }) {
         }
 
         .mood-option-btn:hover {
-          background: rgba(255, 255, 255, 0.05);
-          border-color: rgba(255, 255, 255, 0.2);
+          background: #fdf2f8;
+          border-color: #fbcfe8;
         }
 
         .mood-option-btn.active {
-          background: rgba(99, 102, 241, 0.2);
-          border-color: var(--accent-primary);
-          box-shadow: 0 0 12px rgba(99, 102, 241, 0.25);
+          background: #f3e8ff;
+          border-color: #e9d5ff;
+          box-shadow: 0 0 10px rgba(124, 58, 237, 0.15);
         }
 
         .mood-emoji {
@@ -251,7 +252,7 @@ export default function MoodJournal({ moodLogs, addMoodLog }) {
         .mood-label {
           font-size: 0.75rem;
           font-weight: 600;
-          color: var(--text-main);
+          color: #18181b;
         }
 
         .slider-header {
@@ -262,12 +263,12 @@ export default function MoodJournal({ moodLogs, addMoodLog }) {
         }
 
         .energy-icon {
-          color: var(--accent-amber);
+          color: #d97706;
         }
 
         .energy-slider {
           width: 100%;
-          accent-color: var(--accent-primary);
+          accent-color: #7c3aed;
           height: 6px;
           border-radius: var(--radius-full);
           cursor: pointer;
@@ -291,7 +292,7 @@ export default function MoodJournal({ moodLogs, addMoodLog }) {
         .tag-btn {
           padding: 0.35rem 0.75rem;
           border-radius: var(--radius-full);
-          background: rgba(0, 0, 0, 0.2);
+          background: #ffffff;
           border: 1px solid var(--border-color);
           color: var(--text-muted);
           font-size: 0.8rem;
@@ -300,9 +301,9 @@ export default function MoodJournal({ moodLogs, addMoodLog }) {
         }
 
         .tag-btn.active {
-          background: rgba(20, 184, 166, 0.2);
-          border-color: var(--accent-teal);
-          color: #2dd4bf;
+          background: #fce7f3;
+          border-color: #fbcfe8;
+          color: #db2777;
         }
 
         .submit-btn {
@@ -324,20 +325,21 @@ export default function MoodJournal({ moodLogs, addMoodLog }) {
           gap: 1rem;
           padding: 1rem;
           border-radius: var(--radius-md);
-          background: rgba(0, 0, 0, 0.15);
-          border: 1px solid var(--border-color);
+          background: #faf8fc;
+          border: 1px solid #e9d5ff;
         }
 
         .timeline-badge {
           width: 40px;
           height: 40px;
           border-radius: var(--radius-full);
-          background: rgba(255, 255, 255, 0.05);
+          background: #ffffff;
           display: flex;
           align-items: center;
           justify-content: center;
           font-size: 1.3rem;
           flex-shrink: 0;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.03);
         }
 
         .timeline-content {
@@ -356,6 +358,7 @@ export default function MoodJournal({ moodLogs, addMoodLog }) {
         .log-rating {
           font-weight: 700;
           font-size: 1rem;
+          color: #18181b;
         }
 
         .log-time {
@@ -372,13 +375,13 @@ export default function MoodJournal({ moodLogs, addMoodLog }) {
 
         .energy-badge {
           font-size: 0.75rem;
-          color: var(--accent-amber);
+          color: #d97706;
           font-weight: 600;
         }
 
         .tag-badge {
           font-size: 0.75rem;
-          color: var(--accent-primary);
+          color: #7c3aed;
         }
 
         .log-note {

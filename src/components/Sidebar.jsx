@@ -33,14 +33,14 @@ export default function Sidebar({
   const activeUser = users.find(u => u.id === currentUserId) || users[0] || {
     name: 'Priya',
     role: 'CS Student',
-    avatarColor: '#6366f1',
+    avatarColor: '#ec4899',
     avatarEmoji: '🎓'
   };
 
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, badge: null },
-    { id: 'brainDump', label: 'Brain Dump', icon: Brain, badge: 'Fast AI' },
-    { id: 'smartPriority', label: 'Smart Priority', icon: Flame, badge: 'AI Focus' },
+    { id: 'brainDump', label: 'Brain Dump', icon: Brain, badge: 'Quick' },
+    { id: 'smartPriority', label: 'Smart Priority', icon: Flame, badge: 'Focus' },
     { id: 'habits', label: 'Daily Routines', icon: CheckSquare, badge: 'Study' },
     { id: 'mood', label: 'Vibe & Energy', icon: Smile, badge: null },
     { id: 'goals', label: 'Projects & Deadlines', icon: Target, badge: null },
@@ -53,11 +53,11 @@ export default function Sidebar({
       {/* Brand Header */}
       <div className="brand-header">
         <div className="brand-icon-wrapper">
-          <Sparkles className="brand-icon" size={24} />
+          <Sparkles className="brand-icon" size={22} />
         </div>
         <div className="brand-text">
           <h1 className="brand-title">LifeLens</h1>
-          <span className="brand-subtitle">Student HQ</span>
+          <span className="brand-subtitle">Productivity & Life HQ</span>
         </div>
       </div>
 
@@ -72,7 +72,7 @@ export default function Sidebar({
               onClick={() => setActiveTab(item.id)}
               className={`nav-item ${isActive ? 'active' : ''}`}
             >
-              <Icon size={20} className="nav-icon" />
+              <Icon size={19} className="nav-icon" />
               <span className="nav-label">{item.label}</span>
               {item.badge && <span className="nav-badge">{item.badge}</span>}
             </button>
@@ -89,7 +89,7 @@ export default function Sidebar({
             className="user-profile-card interactive"
             title="Click to switch or add profile"
           >
-            <div className="avatar" style={{ background: activeUser.avatarColor || '#6366f1' }}>
+            <div className="avatar" style={{ background: activeUser.avatarColor || '#ec4899' }}>
               <span>{activeUser.avatarEmoji || '🎓'}</span>
             </div>
             <div className="user-info">
@@ -116,7 +116,7 @@ export default function Sidebar({
                     }}
                     className={`user-option ${u.id === currentUserId ? 'active' : ''}`}
                   >
-                    <div className="avatar-sm" style={{ background: u.avatarColor || '#6366f1' }}>
+                    <div className="avatar-sm" style={{ background: u.avatarColor || '#ec4899' }}>
                       {u.avatarEmoji || '🎓'}
                     </div>
                     <div className="user-option-info">
@@ -145,7 +145,7 @@ export default function Sidebar({
         {/* Theme Toggle Button */}
         <button onClick={toggleTheme} className="theme-toggle-btn" title="Toggle Theme">
           {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-          <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
+          <span>{theme === 'dark' ? 'Light Theme' : 'Soft Theme'}</span>
         </button>
       </div>
 
@@ -158,10 +158,8 @@ export default function Sidebar({
 
       <style>{`
         .sidebar-container {
-          width: 260px;
-          background: var(--bg-card);
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
+          width: 250px;
+          background: #ffffff;
           border-right: 1px solid var(--border-color);
           display: flex;
           flex-direction: column;
@@ -170,40 +168,39 @@ export default function Sidebar({
           position: sticky;
           top: 0;
           z-index: 50;
+          box-shadow: 2px 0 10px rgba(0, 0, 0, 0.02);
         }
 
         .brand-header {
           display: flex;
           align-items: center;
           gap: 0.85rem;
-          padding: 0.5rem 0.75rem 1.5rem;
+          padding: 0.25rem 0.5rem 1.25rem;
           border-bottom: 1px solid var(--border-color);
           margin-bottom: 1.25rem;
         }
 
         .brand-icon-wrapper {
-          width: 42px;
-          height: 42px;
+          width: 38px;
+          height: 38px;
           border-radius: var(--radius-md);
-          background: var(--gradient-primary);
+          background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
           display: flex;
           align-items: center;
           justify-content: center;
           color: white;
-          box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+          box-shadow: 0 4px 10px rgba(236, 72, 153, 0.25);
         }
 
         .brand-title {
-          font-size: 1.35rem;
+          font-size: 1.25rem;
           font-weight: 800;
           letter-spacing: -0.02em;
-          background: var(--gradient-primary);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
+          color: #18181b;
         }
 
         .brand-subtitle {
-          font-size: 0.75rem;
+          font-size: 0.72rem;
           color: var(--text-muted);
           font-weight: 500;
           display: block;
@@ -212,21 +209,21 @@ export default function Sidebar({
         .nav-menu {
           display: flex;
           flex-direction: column;
-          gap: 0.4rem;
+          gap: 0.35rem;
           flex: 1;
         }
 
         .nav-item {
           display: flex;
           align-items: center;
-          gap: 0.85rem;
-          padding: 0.8rem 1rem;
+          gap: 0.75rem;
+          padding: 0.75rem 0.9rem;
           border-radius: var(--radius-md);
           background: transparent;
           color: var(--text-muted);
           border: 1px solid transparent;
           cursor: pointer;
-          font-size: 0.95rem;
+          font-size: 0.9rem;
           font-weight: 600;
           transition: all var(--transition-fast);
           text-align: left;
@@ -235,19 +232,19 @@ export default function Sidebar({
 
         .nav-item:hover {
           color: var(--text-main);
-          background: var(--bg-glass);
-          border-color: rgba(255, 255, 255, 0.05);
+          background: #fdf2f8;
+          border-color: #fbcfe8;
         }
 
         .nav-item.active {
-          color: #ffffff;
-          background: linear-gradient(90deg, rgba(99, 102, 241, 0.25) 0%, rgba(139, 92, 246, 0.15) 100%);
-          border-color: rgba(99, 102, 241, 0.4);
-          box-shadow: 0 4px 15px rgba(99, 102, 241, 0.15);
+          color: var(--accent-purple);
+          background: #f3e8ff;
+          border-color: #e9d5ff;
+          box-shadow: 0 2px 8px rgba(124, 58, 237, 0.08);
         }
 
         .nav-item.active .nav-icon {
-          color: #818cf8;
+          color: var(--accent-purple);
         }
 
         .nav-badge {
@@ -255,8 +252,8 @@ export default function Sidebar({
           font-size: 0.65rem;
           padding: 0.15rem 0.5rem;
           border-radius: var(--radius-full);
-          background: rgba(99, 102, 241, 0.2);
-          color: #a5b4fc;
+          background: #fce7f3;
+          color: #db2777;
           font-weight: 700;
         }
 
@@ -276,8 +273,8 @@ export default function Sidebar({
           display: flex;
           align-items: center;
           gap: 0.75rem;
-          padding: 0.65rem 0.75rem;
-          background: rgba(0, 0, 0, 0.2);
+          padding: 0.6rem 0.75rem;
+          background: #f8fafc;
           border-radius: var(--radius-md);
           border: 1px solid var(--border-color);
           width: 100%;
@@ -288,20 +285,21 @@ export default function Sidebar({
         }
 
         .user-profile-card:hover {
-          background: rgba(255, 255, 255, 0.06);
-          border-color: rgba(255, 255, 255, 0.2);
+          background: #f3e8ff;
+          border-color: #e9d5ff;
         }
 
         .avatar {
-          width: 36px;
-          height: 36px;
+          width: 34px;
+          height: 34px;
           border-radius: var(--radius-full);
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 1.1rem;
+          font-size: 1rem;
           flex-shrink: 0;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+          color: white;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
         }
 
         .user-info {
@@ -312,7 +310,7 @@ export default function Sidebar({
         }
 
         .user-name {
-          font-size: 0.88rem;
+          font-size: 0.85rem;
           font-weight: 700;
           color: var(--text-main);
           white-space: nowrap;
@@ -321,7 +319,7 @@ export default function Sidebar({
         }
 
         .user-tier {
-          font-size: 0.72rem;
+          font-size: 0.7rem;
           color: var(--text-muted);
           white-space: nowrap;
           overflow: hidden;
@@ -350,11 +348,12 @@ export default function Sidebar({
           flex-direction: column;
           gap: 0.5rem;
           box-shadow: var(--shadow-lg);
-          border-color: rgba(99, 102, 241, 0.3);
+          border-color: #e9d5ff;
+          background: #ffffff;
         }
 
         .dropdown-header {
-          font-size: 0.75rem;
+          font-size: 0.72rem;
           font-weight: 700;
           color: var(--text-muted);
           text-transform: uppercase;
@@ -386,12 +385,12 @@ export default function Sidebar({
         }
 
         .user-option:hover {
-          background: rgba(255, 255, 255, 0.08);
+          background: #fdf2f8;
         }
 
         .user-option.active {
-          background: rgba(99, 102, 241, 0.15);
-          border-color: rgba(99, 102, 241, 0.3);
+          background: #f3e8ff;
+          border-color: #e9d5ff;
         }
 
         .avatar-sm {
@@ -403,6 +402,7 @@ export default function Sidebar({
           justify-content: center;
           font-size: 0.85rem;
           flex-shrink: 0;
+          color: white;
         }
 
         .user-option-info {
@@ -422,7 +422,7 @@ export default function Sidebar({
         }
 
         .check-icon {
-          color: var(--accent-primary);
+          color: var(--accent-purple);
         }
 
         .add-user-btn {
@@ -432,7 +432,7 @@ export default function Sidebar({
           gap: 0.5rem;
           padding: 0.55rem;
           border-radius: var(--radius-md);
-          background: var(--gradient-primary);
+          background: var(--gradient-btn-primary);
           color: white;
           border: none;
           font-weight: 600;
@@ -443,7 +443,7 @@ export default function Sidebar({
         }
 
         .add-user-btn:hover {
-          opacity: 0.9;
+          opacity: 0.95;
         }
 
         .theme-toggle-btn {
@@ -452,8 +452,8 @@ export default function Sidebar({
           justify-content: center;
           gap: 0.5rem;
           width: 100%;
-          padding: 0.65rem;
-          background: var(--bg-glass);
+          padding: 0.6rem;
+          background: #f8fafc;
           border: 1px solid var(--border-color);
           border-radius: var(--radius-md);
           color: var(--text-main);
@@ -464,8 +464,9 @@ export default function Sidebar({
         }
 
         .theme-toggle-btn:hover {
-          background: rgba(255, 255, 255, 0.08);
-          border-color: var(--accent-primary);
+          background: #f3e8ff;
+          border-color: #e9d5ff;
+          color: var(--accent-purple);
         }
 
         @media (max-width: 768px) {

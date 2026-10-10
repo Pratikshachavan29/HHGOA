@@ -174,7 +174,7 @@ export default function SmartPriority({
       <div className="glass-card matrix-main-card">
         <div className="matrix-header-bar">
           <div className="matrix-title-group">
-            <Layers className="text-indigo" size={22} />
+            <Layers className="text-purple" size={22} />
             <h2 className="card-title">Prioritized Action Queue</h2>
           </div>
 
@@ -195,7 +195,7 @@ export default function SmartPriority({
         <div className="ranked-task-list">
           {displayCards.length === 0 ? (
             <div className="empty-priority-box">
-              <Brain size={40} className="text-indigo" />
+              <Brain size={40} className="text-purple" />
               <h3>No Tasks Found in Queue</h3>
               <p>Add messy thoughts in the Brain Dump page to automatically populate this matrix.</p>
             </div>
@@ -208,7 +208,7 @@ export default function SmartPriority({
                 {/* Rank Badge */}
                 <div className="rank-badge-col">
                   <span className="rank-number">#{idx + 1}</span>
-                  <div className="score-circle" style={{ borderColor: card.meta.score >= 80 ? '#f43f5e' : card.meta.score >= 55 ? '#f59e0b' : '#10b981' }}>
+                  <div className="score-circle" style={{ borderColor: card.meta.score >= 80 ? '#f43f5e' : card.meta.score >= 55 ? '#d97706' : '#059669' }}>
                     <span className="score-val">{card.meta.score}</span>
                   </div>
                 </div>
@@ -261,7 +261,7 @@ export default function SmartPriority({
                   {/* Transparent Explanation Box */}
                   <div className="explanation-box">
                     <div className="explanation-header">
-                      <HelpCircle size={14} className="text-indigo" />
+                      <HelpCircle size={14} className="text-purple" />
                       <span className="explanation-title">Why Ranked #{idx + 1}?</span>
                     </div>
 
@@ -309,9 +309,9 @@ export default function SmartPriority({
         }
 
         .hero-focus-card {
-          background: linear-gradient(135deg, rgba(244, 63, 94, 0.12) 0%, rgba(99, 102, 241, 0.08) 100%);
-          border-color: rgba(244, 63, 94, 0.25);
-          padding: 2rem;
+          background: linear-gradient(135deg, #fff1f2 0%, #f3e8ff 100%);
+          border-color: #fecdd3;
+          padding: 1.75rem 2rem;
           display: flex;
           flex-direction: column;
           gap: 1rem;
@@ -326,17 +326,18 @@ export default function SmartPriority({
         .score-pill {
           font-size: 0.85rem;
           font-weight: 800;
-          color: var(--accent-rose);
-          background: rgba(244, 63, 94, 0.15);
+          color: #e11d48;
+          background: #ffe4e6;
           padding: 0.25rem 0.75rem;
           border-radius: var(--radius-full);
-          border: 1px solid rgba(244, 63, 94, 0.3);
+          border: 1px solid #fecdd3;
         }
 
         .hero-focus-title {
-          font-size: 1.6rem;
+          font-size: 1.5rem;
           font-weight: 800;
           line-height: 1.25;
+          color: #18181b;
         }
 
         .hero-reasons-flex {
@@ -352,9 +353,10 @@ export default function SmartPriority({
           font-size: 0.78rem;
           font-weight: 700;
           padding: 0.25rem 0.65rem;
-          background: rgba(0, 0, 0, 0.25);
+          background: #ffffff;
+          border: 1px solid #e4e4e7;
           border-radius: var(--radius-md);
-          color: var(--text-main);
+          color: #18181b;
         }
 
         .hero-recommendation {
@@ -375,6 +377,7 @@ export default function SmartPriority({
           flex-direction: column;
           gap: 1.5rem;
           padding: 1.75rem;
+          background: #ffffff;
         }
 
         .matrix-header-bar {
@@ -394,6 +397,7 @@ export default function SmartPriority({
         .card-title {
           font-size: 1.2rem;
           font-weight: 800;
+          color: #18181b;
         }
 
         .filter-pill-group {
@@ -404,7 +408,7 @@ export default function SmartPriority({
         .filter-btn {
           padding: 0.35rem 0.75rem;
           border-radius: var(--radius-full);
-          background: rgba(0, 0, 0, 0.2);
+          background: #ffffff;
           border: 1px solid var(--border-color);
           color: var(--text-muted);
           font-size: 0.8rem;
@@ -414,7 +418,7 @@ export default function SmartPriority({
         }
 
         .filter-btn.active {
-          background: var(--gradient-primary);
+          background: var(--gradient-btn-primary);
           color: white;
           border-color: transparent;
         }
@@ -429,8 +433,8 @@ export default function SmartPriority({
           display: flex;
           gap: 1.25rem;
           padding: 1.25rem;
-          background: rgba(0, 0, 0, 0.2);
-          border: 1px solid var(--border-color);
+          background: #faf8fc;
+          border: 1px solid #e9d5ff;
           border-radius: var(--radius-md);
           transition: all var(--transition-fast);
         }
@@ -457,17 +461,17 @@ export default function SmartPriority({
           width: 44px;
           height: 44px;
           border-radius: var(--radius-full);
-          border: 2px solid var(--accent-primary);
+          border: 2px solid var(--accent-purple);
           display: flex;
           align-items: center;
           justify-content: center;
-          background: rgba(0, 0, 0, 0.3);
+          background: #ffffff;
         }
 
         .score-val {
           font-size: 0.95rem;
           font-weight: 800;
-          color: var(--text-main);
+          color: #18181b;
         }
 
         .ranked-content-col {
@@ -490,14 +494,13 @@ export default function SmartPriority({
           font-weight: 700;
           cursor: pointer;
           outline: none;
-          background: rgba(0, 0, 0, 0.3);
+          background: #ffffff;
           border: 1px solid var(--border-color);
-          color: var(--text-main);
         }
 
-        .priority-high { color: #fb7185; border-color: rgba(244, 63, 94, 0.4); }
-        .priority-medium { color: #fbbf24; border-color: rgba(245, 158, 11, 0.4); }
-        .priority-low { color: #34d399; border-color: rgba(16, 185, 129, 0.4); }
+        .priority-high { color: #e11d48; border-color: #fecdd3; background: #fff1f2; }
+        .priority-medium { color: #d97706; border-color: #fde68a; background: #fffbeb; }
+        .priority-low { color: #059669; border-color: #a7f3d0; background: #ecfdf5; }
 
         .time-stamp {
           font-size: 0.78rem;
@@ -517,8 +520,9 @@ export default function SmartPriority({
         }
 
         .task-title-text {
-          font-size: 1.15rem;
+          font-size: 1.12rem;
           font-weight: 700;
+          color: #18181b;
           flex: 1;
         }
 
@@ -549,8 +553,8 @@ export default function SmartPriority({
         }
 
         .explanation-box {
-          background: rgba(0, 0, 0, 0.25);
-          border: 1px solid var(--border-color);
+          background: #ffffff;
+          border: 1px solid #e4e4e7;
           border-radius: var(--radius-md);
           padding: 0.75rem 1rem;
           display: flex;
@@ -568,7 +572,7 @@ export default function SmartPriority({
         .explanation-title {
           font-size: 0.78rem;
           font-weight: 700;
-          color: var(--accent-primary);
+          color: #7c3aed;
           text-transform: uppercase;
           letter-spacing: 0.05em;
         }
@@ -583,8 +587,8 @@ export default function SmartPriority({
           font-size: 0.72rem;
           padding: 0.15rem 0.5rem;
           border-radius: var(--radius-full);
-          background: rgba(99, 102, 241, 0.15);
-          color: #a5b4fc;
+          background: #f3e8ff;
+          color: #7c3aed;
           font-weight: 600;
         }
 

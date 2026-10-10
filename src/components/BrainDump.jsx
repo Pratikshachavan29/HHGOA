@@ -145,7 +145,7 @@ export default function BrainDump({
       {/* Input Box Section */}
       <div className="glass-card input-dump-card">
         <div className="card-header-row">
-          <Brain className="text-indigo" size={22} />
+          <Brain className="text-purple" size={22} />
           <h2 className="card-title">Dump Messy Thoughts Line-by-Line</h2>
           <span className="badge badge-indigo">Fast AI Parser</span>
         </div>
@@ -169,7 +169,7 @@ export default function BrainDump({
       <div className="organized-section">
         <div className="section-bar">
           <div className="section-title-group">
-            <ListTodo size={20} className="text-indigo" />
+            <ListTodo size={20} className="text-purple" />
             <h2 className="section-title">Organized Fast Files ({filteredCards.length})</h2>
           </div>
 
@@ -312,8 +312,9 @@ export default function BrainDump({
         }
 
         .card-title {
-          font-size: 1.25rem;
+          font-size: 1.2rem;
           font-weight: 700;
+          color: #18181b;
           flex: 1;
         }
 
@@ -323,6 +324,8 @@ export default function BrainDump({
           line-height: 1.6;
           resize: vertical;
           padding: 1rem;
+          background: #ffffff;
+          border-color: #e4e4e7;
         }
 
         .action-row {
@@ -357,8 +360,9 @@ export default function BrainDump({
         }
 
         .section-title {
-          font-size: 1.2rem;
+          font-size: 1.15rem;
           font-weight: 800;
+          color: #18181b;
         }
 
         .priority-filters {
@@ -375,7 +379,7 @@ export default function BrainDump({
         .filter-btn {
           padding: 0.35rem 0.75rem;
           border-radius: var(--radius-full);
-          background: rgba(0, 0, 0, 0.2);
+          background: #ffffff;
           border: 1px solid var(--border-color);
           color: var(--text-muted);
           font-size: 0.8rem;
@@ -385,7 +389,7 @@ export default function BrainDump({
         }
 
         .filter-btn.active {
-          background: var(--gradient-primary);
+          background: var(--gradient-btn-primary);
           color: white;
           border-color: transparent;
         }
@@ -398,11 +402,12 @@ export default function BrainDump({
           display: flex;
           flex-direction: column;
           gap: 1rem;
+          background: #ffffff;
         }
 
         .thought-card.processed {
           opacity: 0.55;
-          border-color: rgba(16, 185, 129, 0.2);
+          border-color: #a7f3d0;
         }
 
         .card-top-bar {
@@ -418,14 +423,13 @@ export default function BrainDump({
           font-weight: 700;
           cursor: pointer;
           outline: none;
-          background: rgba(0, 0, 0, 0.3);
+          background: #ffffff;
           border: 1px solid var(--border-color);
-          color: var(--text-main);
         }
 
-        .priority-high { color: #fb7185; border-color: rgba(244, 63, 94, 0.4); }
-        .priority-medium { color: #fbbf24; border-color: rgba(245, 158, 11, 0.4); }
-        .priority-low { color: #34d399; border-color: rgba(16, 185, 129, 0.4); }
+        .priority-high { color: #e11d48; border-color: #fecdd3; background: #fff1f2; }
+        .priority-medium { color: #d97706; border-color: #fde68a; background: #fffbeb; }
+        .priority-low { color: #059669; border-color: #a7f3d0; background: #ecfdf5; }
 
         .card-time {
           font-size: 0.75rem;
@@ -446,9 +450,10 @@ export default function BrainDump({
         }
 
         .card-thought-title {
-          font-size: 1.1rem;
+          font-size: 1.08rem;
           font-weight: 700;
           line-height: 1.35;
+          color: #18181b;
           flex: 1;
         }
 
@@ -496,7 +501,7 @@ export default function BrainDump({
           background: transparent;
           border: 1px solid transparent;
           border-radius: var(--radius-sm);
-          color: var(--text-main);
+          color: #18181b;
           font-size: 0.82rem;
           font-weight: 600;
           width: 100%;
@@ -507,20 +512,20 @@ export default function BrainDump({
 
         .meta-input:hover, .meta-input:focus {
           border-color: var(--border-color);
-          background: rgba(0, 0, 0, 0.2);
+          background: #faf8fc;
         }
 
         .meta-icon {
-          color: var(--accent-primary);
+          color: #7c3aed;
           flex-shrink: 0;
         }
 
         .text-amber {
-          color: var(--accent-amber);
+          color: #d97706;
         }
 
         .text-emerald {
-          color: var(--accent-emerald);
+          color: #059669;
         }
 
         .card-actions-row {
@@ -535,7 +540,7 @@ export default function BrainDump({
         }
 
         .delete-btn:hover {
-          color: var(--accent-rose);
+          color: #e11d48;
         }
 
         .empty-dump-card {
@@ -549,7 +554,7 @@ export default function BrainDump({
         }
 
         .empty-icon {
-          color: var(--accent-primary);
+          color: #7c3aed;
         }
       `}</style>
     </div>

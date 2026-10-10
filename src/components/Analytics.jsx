@@ -45,7 +45,7 @@ export default function Analytics({ habits, moodLogs, focusTime }) {
       {/* Highlights Grid */}
       <div className="grid-3 highlights-grid">
         <div className="glass-card highlight-card">
-          <Award size={28} className="highlight-icon text-indigo" />
+          <Award size={28} className="highlight-icon text-purple" />
           <div className="highlight-info">
             <span className="highlight-title">Weekly Study Consistency</span>
             <span className="highlight-value">84%</span>
@@ -54,7 +54,7 @@ export default function Analytics({ habits, moodLogs, focusTime }) {
         </div>
 
         <div className="glass-card highlight-card">
-          <Smile size={28} className="highlight-icon text-emerald" />
+          <Smile size={28} className="highlight-icon text-pink" />
           <div className="highlight-info">
             <span className="highlight-title">Top Study Vibe</span>
             <span className="highlight-value">Productive ⚡</span>
@@ -117,8 +117,8 @@ export default function Analytics({ habits, moodLogs, focusTime }) {
                       className="progress-bar-fill" 
                       style={{ 
                         width: `${percent}%`,
-                        background: mood === 'Joyful' ? 'var(--gradient-teal)' : 
-                                    mood === 'Productive' ? 'var(--gradient-primary)' : 'var(--gradient-amber)' 
+                        background: mood === 'Joyful' ? 'linear-gradient(90deg, #10b981, #34d399)' : 
+                                    mood === 'Productive' ? 'linear-gradient(90deg, #8b5cf6, #7c3aed)' : 'linear-gradient(90deg, #f59e0b, #d97706)' 
                       }}
                     ></div>
                   </div>
@@ -141,15 +141,16 @@ export default function Analytics({ habits, moodLogs, focusTime }) {
           align-items: center;
           gap: 1.25rem;
           padding: 1.5rem;
+          background: #ffffff;
         }
 
         .highlight-icon {
           flex-shrink: 0;
         }
 
-        .text-indigo { color: #818cf8; }
-        .text-emerald { color: #34d399; }
-        .text-amber { color: #fbbf24; }
+        .text-purple { color: #7c3aed; }
+        .text-pink { color: #ec4899; }
+        .text-amber { color: #d97706; }
 
         .highlight-info {
           display: flex;
@@ -165,12 +166,12 @@ export default function Analytics({ habits, moodLogs, focusTime }) {
         .highlight-value {
           font-size: 1.6rem;
           font-weight: 800;
-          color: var(--text-main);
+          color: #18181b;
         }
 
         .highlight-sub {
           font-size: 0.75rem;
-          color: var(--accent-emerald);
+          color: #059669;
           font-weight: 600;
         }
 
@@ -178,6 +179,7 @@ export default function Analytics({ habits, moodLogs, focusTime }) {
           display: flex;
           flex-direction: column;
           gap: 1.5rem;
+          background: #ffffff;
         }
 
         .chart-header {
@@ -189,6 +191,7 @@ export default function Analytics({ habits, moodLogs, focusTime }) {
         .chart-title {
           font-size: 1.15rem;
           font-weight: 700;
+          color: #18181b;
         }
 
         .bar-chart-container {
@@ -211,7 +214,7 @@ export default function Analytics({ habits, moodLogs, focusTime }) {
         .bar-wrapper {
           width: 28px;
           flex: 1;
-          background: rgba(255, 255, 255, 0.05);
+          background: #f4f4f5;
           border-radius: var(--radius-md);
           display: flex;
           align-items: flex-end;
@@ -220,7 +223,7 @@ export default function Analytics({ habits, moodLogs, focusTime }) {
 
         .bar-fill {
           width: 100%;
-          background: var(--gradient-primary);
+          background: linear-gradient(180deg, #ec4899 0%, #8b5cf6 100%);
           border-radius: var(--radius-md);
           transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -248,6 +251,7 @@ export default function Analytics({ habits, moodLogs, focusTime }) {
           justify-content: space-between;
           font-size: 0.88rem;
           font-weight: 600;
+          color: #18181b;
         }
 
         .mood-percent {

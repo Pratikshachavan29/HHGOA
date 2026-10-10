@@ -160,12 +160,13 @@ export default function FocusTimer({ addFocusMinutes }) {
           gap: 2rem;
           padding: 3rem 2rem;
           text-align: center;
+          background: #ffffff;
         }
 
         .timer-modes {
           display: flex;
           gap: 0.75rem;
-          background: rgba(0, 0, 0, 0.2);
+          background: #faf8fc;
           padding: 0.4rem;
           border-radius: var(--radius-full);
           border: 1px solid var(--border-color);
@@ -189,9 +190,9 @@ export default function FocusTimer({ addFocusMinutes }) {
         }
 
         .mode-btn.active {
-          background: var(--gradient-primary);
+          background: var(--gradient-btn-primary);
           color: white;
-          box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+          box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
         }
 
         .task-input-wrapper {
@@ -202,6 +203,7 @@ export default function FocusTimer({ addFocusMinutes }) {
         .task-input {
           text-align: center;
           font-size: 0.95rem;
+          background: #ffffff;
         }
 
         .timer-display-ring {
@@ -218,13 +220,13 @@ export default function FocusTimer({ addFocusMinutes }) {
 
         .timer-circle-bg {
           fill: none;
-          stroke: rgba(255, 255, 255, 0.06);
+          stroke: #e4e4e7;
           stroke-width: 6;
         }
 
         .timer-circle-progress {
           fill: none;
-          stroke: var(--accent-primary);
+          stroke: #8b5cf6;
           stroke-width: 6;
           stroke-linecap: round;
           stroke-dasharray: 276;
@@ -245,7 +247,7 @@ export default function FocusTimer({ addFocusMinutes }) {
           font-weight: 800;
           letter-spacing: -0.03em;
           font-family: monospace;
-          color: var(--text-main);
+          color: #18181b;
         }
 
         .clock-mode-label {
@@ -269,7 +271,7 @@ export default function FocusTimer({ addFocusMinutes }) {
         }
 
         .btn-pause {
-          background: var(--gradient-amber);
+          background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
           color: white;
         }
 
@@ -297,7 +299,7 @@ export default function FocusTimer({ addFocusMinutes }) {
         }
 
         .stat-icon {
-          color: var(--accent-emerald);
+          color: #059669;
         }
       `}</style>
     </div>

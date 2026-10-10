@@ -208,8 +208,9 @@ export default function HabitTracker({ habits, toggleHabit, addHabit, deleteHabi
         }
 
         .page-title {
-          font-size: 1.8rem;
+          font-size: 1.75rem;
           font-weight: 800;
+          color: #18181b;
         }
 
         .page-subtitle {
@@ -224,6 +225,7 @@ export default function HabitTracker({ habits, toggleHabit, addHabit, deleteHabi
           gap: 1rem;
           padding: 1rem 1.25rem;
           flex-wrap: wrap;
+          background: #ffffff;
         }
 
         .category-pills {
@@ -235,7 +237,7 @@ export default function HabitTracker({ habits, toggleHabit, addHabit, deleteHabi
         .pill-btn {
           padding: 0.45rem 0.9rem;
           border-radius: var(--radius-full);
-          background: rgba(0, 0, 0, 0.2);
+          background: #ffffff;
           border: 1px solid var(--border-color);
           color: var(--text-muted);
           font-size: 0.85rem;
@@ -246,11 +248,12 @@ export default function HabitTracker({ habits, toggleHabit, addHabit, deleteHabi
 
         .pill-btn:hover {
           color: var(--text-main);
-          border-color: rgba(255, 255, 255, 0.2);
+          border-color: #fbcfe8;
+          background: #fdf2f8;
         }
 
         .pill-btn.active {
-          background: var(--gradient-primary);
+          background: var(--gradient-btn-primary);
           color: white;
           border-color: transparent;
         }
@@ -271,6 +274,7 @@ export default function HabitTracker({ habits, toggleHabit, addHabit, deleteHabi
         .search-input {
           padding-left: 2.25rem;
           font-size: 0.85rem;
+          background: #ffffff;
         }
 
         .habits-list {
@@ -283,6 +287,7 @@ export default function HabitTracker({ habits, toggleHabit, addHabit, deleteHabi
           display: flex;
           flex-direction: column;
           gap: 1.25rem;
+          background: #ffffff;
         }
 
         .habit-header-row {
@@ -298,19 +303,20 @@ export default function HabitTracker({ habits, toggleHabit, addHabit, deleteHabi
         }
 
         .habit-title {
-          font-size: 1.15rem;
+          font-size: 1.1rem;
           font-weight: 700;
+          color: #18181b;
         }
 
         .badge-category {
           width: max-content;
         }
 
-        .badge-academics { background: rgba(99, 102, 241, 0.15); color: #818cf8; }
-        .badge-prepwork { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
-        .badge-projects { background: rgba(139, 92, 246, 0.15); color: #c084fc; }
-        .badge-selfcare { background: rgba(16, 185, 129, 0.15); color: #34d399; }
-        .badge-personal { background: rgba(244, 63, 94, 0.15); color: #fb7185; }
+        .badge-academics { background: #f3e8ff; color: #7c3aed; border: 1px solid #e9d5ff; }
+        .badge-prepwork { background: #fffbeb; color: #d97706; border: 1px solid #fde68a; }
+        .badge-projects { background: #fce7f3; color: #ec4899; border: 1px solid #fbcfe8; }
+        .badge-selfcare { background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; }
+        .badge-personal { background: #fff1f2; color: #e11d48; border: 1px solid #fecdd3; }
 
         .habit-actions {
           display: flex;
@@ -323,10 +329,10 @@ export default function HabitTracker({ habits, toggleHabit, addHabit, deleteHabi
           align-items: center;
           gap: 0.35rem;
           padding: 0.35rem 0.75rem;
-          background: rgba(245, 158, 11, 0.1);
-          border: 1px solid rgba(245, 158, 11, 0.25);
+          background: #fffbeb;
+          border: 1px solid #fde68a;
           border-radius: var(--radius-full);
-          color: var(--accent-amber);
+          color: #d97706;
           font-size: 0.8rem;
           font-weight: 700;
         }
@@ -336,7 +342,7 @@ export default function HabitTracker({ habits, toggleHabit, addHabit, deleteHabi
         }
 
         .delete-btn:hover {
-          color: var(--accent-rose);
+          color: #e11d48;
         }
 
         .weekly-matrix {
@@ -375,8 +381,8 @@ export default function HabitTracker({ habits, toggleHabit, addHabit, deleteHabi
           width: 32px;
           height: 32px;
           border-radius: var(--radius-md);
-          background: rgba(0, 0, 0, 0.2);
-          border: 1px solid var(--border-color);
+          background: #f4f4f5;
+          border: 1px solid #e4e4e7;
           color: white;
           display: flex;
           align-items: center;
@@ -386,12 +392,12 @@ export default function HabitTracker({ habits, toggleHabit, addHabit, deleteHabi
         }
 
         .day-bubble.today {
-          border-color: var(--accent-primary);
-          box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+          border-color: #8b5cf6;
+          box-shadow: 0 0 8px rgba(139, 92, 246, 0.2);
         }
 
         .day-bubble.checked {
-          background: var(--gradient-teal);
+          background: linear-gradient(135deg, #10b981 0%, #059669 100%);
           border-color: transparent;
         }
 
@@ -405,15 +411,15 @@ export default function HabitTracker({ habits, toggleHabit, addHabit, deleteHabi
         }
 
         .empty-icon {
-          color: var(--accent-primary);
+          color: #7c3aed;
         }
 
         /* Modal Overlay */
         .modal-overlay {
           position: fixed;
           inset: 0;
-          background: rgba(0, 0, 0, 0.7);
-          backdrop-filter: blur(8px);
+          background: rgba(24, 24, 27, 0.5);
+          backdrop-filter: blur(6px);
           z-index: 100;
           display: flex;
           align-items: center;
@@ -425,12 +431,14 @@ export default function HabitTracker({ habits, toggleHabit, addHabit, deleteHabi
           width: 100%;
           max-width: 440px;
           padding: 2rem;
+          background: #ffffff;
         }
 
         .modal-title {
           font-size: 1.35rem;
           font-weight: 800;
           margin-bottom: 1.25rem;
+          color: #18181b;
         }
 
         .modal-form {

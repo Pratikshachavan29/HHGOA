@@ -34,11 +34,11 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
 
   return (
     <div className="dashboard-wrapper animate-fade-in">
-      {/* Top Banner - Hero Wallet Card */}
+      {/* Top Banner - Hero Card */}
       <div className="glass-card hero-card">
         <div className="hero-content">
           <span className="badge badge-indigo">
-            <Sparkles size={12} /> Student SaaS Dashboard
+            <Sparkles size={12} /> Student Productivity HQ
           </span>
           <h1 className="hero-title">
             Hey <span className="title-gradient">{userName}</span>! Ready to crush today? 🚀
@@ -50,16 +50,16 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
           {/* Quick Action Shortcut Toolbar */}
           <div className="quick-actions-toolbar">
             <button onClick={() => setActiveTab('brainDump')} className="btn btn-secondary action-pill">
-              <Brain size={14} className="text-teal" /> Quick Dump
+              <Brain size={14} className="text-purple" /> Quick Dump
             </button>
             <button onClick={() => setActiveTab('smartPriority')} className="btn btn-secondary action-pill">
-              <Zap size={14} className="text-amber" /> Smart Priority
+              <Zap size={14} className="text-pink" /> Smart Priority
             </button>
             <button onClick={() => setActiveTab('focus')} className="btn btn-secondary action-pill">
-              <Clock size={14} className="text-rose" /> 25m Focus
+              <Clock size={14} className="text-blue" /> 25m Focus
             </button>
             <button onClick={() => setActiveTab('habits')} className="btn btn-secondary action-pill">
-              <Plus size={14} className="text-teal" /> Add Routine
+              <Plus size={14} className="text-purple" /> Add Routine
             </button>
           </div>
         </div>
@@ -87,7 +87,7 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
       {/* Metrics Row */}
       <div className="grid-4 metric-cards-grid">
         <div className="glass-card metric-card">
-          <div className="metric-icon-bg bg-teal">
+          <div className="metric-icon-bg bg-purple">
             <CheckCircle2 size={22} />
           </div>
           <div className="metric-data">
@@ -97,7 +97,7 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
         </div>
 
         <div className="glass-card metric-card">
-          <div className="metric-icon-bg bg-amber">
+          <div className="metric-icon-bg bg-pink">
             <Flame size={22} />
           </div>
           <div className="metric-data">
@@ -107,7 +107,7 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
         </div>
 
         <div className="glass-card metric-card">
-          <div className="metric-icon-bg bg-indigo">
+          <div className="metric-icon-bg bg-blue">
             <Smile size={22} />
           </div>
           <div className="metric-data">
@@ -131,7 +131,7 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
       <div className="glass-card heatmap-card">
         <div className="heatmap-header">
           <div className="heatmap-title-group">
-            <Calendar size={18} className="text-teal" />
+            <Calendar size={18} className="text-purple" />
             <span className="heatmap-title">7-Day Study Consistency</span>
           </div>
           <span className="badge badge-emerald">84% Activity</span>
@@ -218,7 +218,7 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
 
       {/* Quote of the day card */}
       <div className="glass-card quote-card">
-        <Quote className="quote-icon" size={36} />
+        <Quote className="quote-icon" size={32} />
         <div className="quote-body">
           <p className="quote-text">"{dailyQuote.text}"</p>
           <span className="quote-author">— {dailyQuote.author}</span>
@@ -237,15 +237,16 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
           align-items: center;
           justify-content: space-between;
           padding: 2.25rem;
-          background: var(--gradient-teal-soft);
-          border-color: var(--border-teal-active);
+          background: linear-gradient(135deg, #fdf2f8 0%, #f3e8ff 60%, #eff6ff 100%);
+          border-color: #e9d5ff;
         }
 
         .hero-title {
-          font-size: 2rem;
+          font-size: 1.9rem;
           font-weight: 800;
           margin: 0.5rem 0 0.25rem;
-          line-height: 1.2;
+          line-height: 1.25;
+          color: #18181b;
         }
 
         .hero-subtitle {
@@ -254,7 +255,7 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
         }
 
         .text-highlight {
-          color: var(--text-main);
+          color: #18181b;
         }
 
         .quick-actions-toolbar {
@@ -268,10 +269,13 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
           padding: 0.4rem 0.85rem;
           font-size: 0.8rem;
           border-radius: var(--radius-full);
-          border-color: var(--border-teal);
+          border-color: #e4e4e7;
+          background: #ffffff;
         }
 
-        .text-teal { color: var(--accent-teal-light); }
+        .text-purple { color: #7c3aed; }
+        .text-pink { color: #ec4899; }
+        .text-blue { color: #3b82f6; }
 
         .score-ring-container {
           position: relative;
@@ -288,13 +292,13 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
 
         .circle-bg {
           fill: none;
-          stroke: rgba(255, 255, 255, 0.08);
+          stroke: #e4e4e7;
           stroke-width: 3.8;
         }
 
         .circle-fill {
           fill: none;
-          stroke: var(--accent-teal-light);
+          stroke: #8b5cf6;
           stroke-width: 3.8;
           stroke-linecap: round;
           transition: stroke-dasharray 0.6s ease;
@@ -313,7 +317,7 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
         .score-number {
           font-size: 1.5rem;
           font-weight: 800;
-          color: var(--text-main);
+          color: #18181b;
         }
 
         .score-label {
@@ -332,29 +336,29 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
           align-items: center;
           gap: 1rem;
           padding: 1.25rem;
+          background: #ffffff;
         }
 
         .metric-icon-bg {
-          width: 46px;
-          height: 46px;
+          width: 44px;
+          height: 44px;
           border-radius: var(--radius-md);
           display: flex;
           align-items: center;
           justify-content: center;
-          color: white;
           flex-shrink: 0;
         }
 
-        .bg-teal { background: rgba(20, 184, 166, 0.18); color: var(--accent-teal-light); border: 1px solid var(--border-teal); }
-        .bg-amber { background: rgba(245, 158, 11, 0.18); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
-        .bg-indigo { background: rgba(99, 102, 241, 0.18); color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.3); }
-        .bg-rose { background: rgba(244, 63, 94, 0.18); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3); }
+        .bg-purple { background: #f3e8ff; color: #7c3aed; border: 1px solid #e9d5ff; }
+        .bg-pink { background: #fce7f3; color: #ec4899; border: 1px solid #fbcfe8; }
+        .bg-blue { background: #eff6ff; color: #3b82f6; border: 1px solid #bfdbfe; }
+        .bg-rose { background: #fff1f2; color: #f43f5e; border: 1px solid #fecdd3; }
 
         .metric-value {
-          font-size: 1.3rem;
+          font-size: 1.25rem;
           font-weight: 800;
           display: block;
-          color: var(--text-main);
+          color: #18181b;
         }
 
         .metric-title {
@@ -368,6 +372,7 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
           display: flex;
           flex-direction: column;
           gap: 1rem;
+          background: #ffffff;
         }
 
         .heatmap-header {
@@ -385,6 +390,7 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
         .heatmap-title {
           font-size: 0.95rem;
           font-weight: 700;
+          color: #18181b;
         }
 
         .heatmap-grid {
@@ -410,19 +416,19 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
           width: 100%;
           height: 12px;
           border-radius: var(--radius-sm);
-          background: rgba(255, 255, 255, 0.05);
-          border: 1px solid var(--border-color);
+          background: #f4f4f5;
+          border: 1px solid #e4e4e7;
         }
 
         .heatmap-cell.active-high {
-          background: var(--accent-teal);
-          border-color: var(--accent-teal-light);
-          box-shadow: 0 0 10px rgba(20, 184, 166, 0.3);
+          background: #a855f7;
+          border-color: #c084fc;
+          box-shadow: 0 0 8px rgba(168, 85, 247, 0.2);
         }
 
         .heatmap-cell.active-med {
-          background: rgba(20, 184, 166, 0.35);
-          border-color: var(--border-teal);
+          background: #f472b6;
+          border-color: #fbcfe8;
         }
 
         .section-header {
@@ -433,8 +439,9 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
         }
 
         .section-title {
-          font-size: 1.15rem;
+          font-size: 1.1rem;
           font-weight: 700;
+          color: #18181b;
         }
 
         .section-sub {
@@ -454,15 +461,15 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
           gap: 0.85rem;
           padding: 0.75rem 1rem;
           border-radius: var(--radius-md);
-          background: rgba(0, 0, 0, 0.2);
-          border: 1px solid var(--border-teal);
+          background: #faf8fc;
+          border: 1px solid #e9d5ff;
           transition: all var(--transition-fast);
         }
 
         .habit-item.completed {
           opacity: 0.65;
-          background: rgba(20, 184, 166, 0.08);
-          border-color: rgba(20, 184, 166, 0.25);
+          background: #ecfdf5;
+          border-color: #a7f3d0;
         }
 
         .habit-item.completed .habit-name {
@@ -486,20 +493,22 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
           width: 20px;
           height: 20px;
           border-radius: 6px;
-          border: 2px solid var(--text-muted);
+          border: 2px solid #a1a1aa;
           transition: all 0.2s ease;
           display: inline-block;
+          background: #ffffff;
         }
 
         .checkbox-container input:checked ~ .checkmark {
-          background: var(--accent-teal);
-          border-color: var(--accent-teal);
+          background: #10b981;
+          border-color: #10b981;
         }
 
         .habit-name {
           flex: 1;
           font-weight: 600;
-          font-size: 0.95rem;
+          font-size: 0.92rem;
+          color: #18181b;
         }
 
         .habit-streak-badge {
@@ -507,7 +516,7 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
           align-items: center;
           gap: 0.25rem;
           font-size: 0.75rem;
-          color: var(--accent-amber);
+          color: #d97706;
           font-weight: 700;
         }
 
@@ -531,7 +540,8 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
 
         .goal-title {
           font-weight: 600;
-          font-size: 0.95rem;
+          font-size: 0.92rem;
+          color: #18181b;
         }
 
         .goal-progress-wrapper {
@@ -552,20 +562,20 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
           display: flex;
           align-items: flex-start;
           gap: 1.25rem;
-          background: var(--gradient-teal-soft);
-          border-color: var(--border-teal);
+          background: linear-gradient(135deg, #fdf2f8 0%, #f3e8ff 100%);
+          border-color: #e9d5ff;
         }
 
         .quote-icon {
-          color: var(--accent-teal-light);
+          color: #7c3aed;
           flex-shrink: 0;
           opacity: 0.8;
         }
 
         .quote-text {
-          font-size: 1.05rem;
+          font-size: 1.02rem;
           font-style: italic;
-          color: var(--text-main);
+          color: #18181b;
           margin-bottom: 0.35rem;
         }
 

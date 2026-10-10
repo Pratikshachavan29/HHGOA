@@ -167,6 +167,7 @@ export default function GoalsTracker({ goals, addGoal, updateGoalProgress, delet
           display: flex;
           flex-direction: column;
           gap: 1.25rem;
+          background: #ffffff;
         }
 
         .goal-header {
@@ -182,8 +183,9 @@ export default function GoalsTracker({ goals, addGoal, updateGoalProgress, delet
         }
 
         .goal-name {
-          font-size: 1.2rem;
+          font-size: 1.15rem;
           font-weight: 700;
+          color: #18181b;
         }
 
         .target-date-row {
@@ -195,7 +197,7 @@ export default function GoalsTracker({ goals, addGoal, updateGoalProgress, delet
         }
 
         .cal-icon {
-          color: var(--accent-primary);
+          color: #7c3aed;
         }
 
         .progress-section {
@@ -212,13 +214,13 @@ export default function GoalsTracker({ goals, addGoal, updateGoalProgress, delet
         }
 
         .progress-val {
-          color: var(--accent-primary);
+          color: #7c3aed;
           font-weight: 800;
         }
 
         .progress-slider {
           margin-top: 0.25rem;
-          accent-color: var(--accent-primary);
+          accent-color: #7c3aed;
           cursor: pointer;
         }
 
@@ -227,10 +229,10 @@ export default function GoalsTracker({ goals, addGoal, updateGoalProgress, delet
           align-items: center;
           gap: 0.4rem;
           padding: 0.5rem 0.85rem;
-          background: rgba(16, 185, 129, 0.15);
-          border: 1px solid rgba(16, 185, 129, 0.3);
+          background: #ecfdf5;
+          border: 1px solid #a7f3d0;
           border-radius: var(--radius-md);
-          color: #34d399;
+          color: #059669;
           font-weight: 700;
           font-size: 0.85rem;
         }

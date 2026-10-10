@@ -4,18 +4,18 @@ import { UserPlus, Sparkles, X } from 'lucide-react';
 export default function AddUserModal({ isOpen, onClose, onAddUser }) {
   const [name, setName] = useState('');
   const [role, setRole] = useState('CS Student');
-  const [avatarColor, setAvatarColor] = useState('#6366f1');
+  const [avatarColor, setAvatarColor] = useState('#ec4899');
   const [avatarEmoji, setAvatarEmoji] = useState('🎓');
 
   if (!isOpen) return null;
 
   const colorOptions = [
-    { color: '#6366f1', label: 'Indigo' },
-    { color: '#8b5cf6', label: 'Purple' },
+    { color: '#ec4899', label: 'Soft Pink' },
+    { color: '#8b5cf6', label: 'Muted Purple' },
+    { color: '#3b82f6', label: 'Soft Blue' },
     { color: '#10b981', label: 'Emerald' },
     { color: '#f59e0b', label: 'Amber' },
-    { color: '#f43f5e', label: 'Rose' },
-    { color: '#06b6d4', label: 'Cyan' }
+    { color: '#f43f5e', label: 'Powder Rose' }
   ];
 
   const emojiOptions = ['🎓', '🚀', '🔬', '🎨', '💼', '⚡', '📚', '🧠'];
@@ -42,7 +42,7 @@ export default function AddUserModal({ isOpen, onClose, onAddUser }) {
       <div className="glass-card modal-card animate-fade-in">
         <div className="modal-header">
           <div className="modal-title-group">
-            <UserPlus size={22} className="text-indigo" />
+            <UserPlus size={22} className="text-purple" />
             <h2 className="modal-title">Create New User Profile</h2>
           </div>
           <button onClick={onClose} className="btn-icon" title="Close">
@@ -122,8 +122,8 @@ export default function AddUserModal({ isOpen, onClose, onAddUser }) {
         .modal-overlay {
           position: fixed;
           inset: 0;
-          background: rgba(0, 0, 0, 0.75);
-          backdrop-filter: blur(10px);
+          background: rgba(24, 24, 27, 0.4);
+          backdrop-filter: blur(6px);
           z-index: 200;
           display: flex;
           align-items: center;
@@ -135,6 +135,7 @@ export default function AddUserModal({ isOpen, onClose, onAddUser }) {
           width: 100%;
           max-width: 460px;
           padding: 2rem;
+          background: #ffffff;
         }
 
         .modal-header {
@@ -153,6 +154,7 @@ export default function AddUserModal({ isOpen, onClose, onAddUser }) {
         .modal-title {
           font-size: 1.35rem;
           font-weight: 800;
+          color: #18181b;
           margin: 0;
         }
 
@@ -162,8 +164,8 @@ export default function AddUserModal({ isOpen, onClose, onAddUser }) {
           gap: 1.25rem;
         }
 
-        .text-indigo {
-          color: var(--accent-primary);
+        .text-purple {
+          color: #7c3aed;
         }
 
         .emoji-grid {
@@ -177,20 +179,20 @@ export default function AddUserModal({ isOpen, onClose, onAddUser }) {
           font-size: 1.25rem;
           padding: 0.4rem;
           border-radius: var(--radius-md);
-          background: rgba(0, 0, 0, 0.2);
+          background: #faf8fc;
           border: 1px solid var(--border-color);
           cursor: pointer;
           transition: all var(--transition-fast);
         }
 
         .emoji-btn:hover {
-          background: rgba(255, 255, 255, 0.1);
+          background: #f3e8ff;
         }
 
         .emoji-btn.active {
-          background: rgba(99, 102, 241, 0.2);
-          border-color: var(--accent-primary);
-          box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+          background: #f3e8ff;
+          border-color: #e9d5ff;
+          box-shadow: 0 0 8px rgba(124, 58, 237, 0.2);
         }
 
         .color-picker-flex {
@@ -213,8 +215,8 @@ export default function AddUserModal({ isOpen, onClose, onAddUser }) {
         }
 
         .color-dot.active {
-          border-color: white;
-          box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+          border-color: #18181b;
+          box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
           transform: scale(1.1);
         }
 
