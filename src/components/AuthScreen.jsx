@@ -125,10 +125,6 @@ export default function AuthScreen({ onLoginSuccess, onExploreDemo }) {
         {/* Welcome View */}
         {mode === 'welcome' && (
           <div className="glass-card auth-card animate-fade-in">
-            <span className="badge badge-indigo flex-center gap-1">
-              <ShieldCheck size={13} /> Secure Local Authentication
-            </span>
-
             <h2 className="auth-heading">Welcome to LifeLens</h2>
             <p className="auth-subheading">
               Organize messy thoughts, balance your workload, prevent burnout, and track daily habits in an aesthetic pastel workspace tailored to you.
