@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
 import BrainDump from './components/BrainDump';
+import SmartPriority from './components/SmartPriority';
 import HabitTracker from './components/HabitTracker';
 import MoodJournal from './components/MoodJournal';
 import GoalsTracker from './components/GoalsTracker';
@@ -279,6 +280,17 @@ export default function App() {
             deleteCard={deleteBrainDumpCard}
             toggleProcessed={toggleBrainDumpProcessed}
             addHabit={addHabit}
+          />
+        )}
+
+        {activeTab === 'smartPriority' && (
+          <SmartPriority 
+            cards={brainDumpCards}
+            updateCard={updateBrainDumpCard}
+            deleteCard={deleteBrainDumpCard}
+            toggleProcessed={toggleBrainDumpProcessed}
+            addHabit={addHabit}
+            setActiveTab={setActiveTab}
           />
         )}
 

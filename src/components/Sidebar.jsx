@@ -12,7 +12,8 @@ import {
   ChevronUp,
   UserPlus,
   Check,
-  Brain
+  Brain,
+  Flame
 } from 'lucide-react';
 import AddUserModal from './AddUserModal';
 
@@ -39,6 +40,7 @@ export default function Sidebar({
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, badge: null },
     { id: 'brainDump', label: 'Brain Dump', icon: Brain, badge: 'Fast AI' },
+    { id: 'smartPriority', label: 'Smart Priority', icon: Flame, badge: 'AI Focus' },
     { id: 'habits', label: 'Daily Routines', icon: CheckSquare, badge: 'Study' },
     { id: 'mood', label: 'Vibe & Energy', icon: Smile, badge: null },
     { id: 'goals', label: 'Projects & Deadlines', icon: Target, badge: null },
