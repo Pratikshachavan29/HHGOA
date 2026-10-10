@@ -180,13 +180,39 @@ export default function App() {
     document.documentElement.setAttribute('data-theme', newTheme);
   };
 
+  // Unified Smart Priority Task Handlers
+  const updateSharedTask = (id, fields) => {
+    if (typeof id === 'string' && id.startsWith('habit-')) {
+      const habitId = Number(id.replace('habit-', ''));
+      if (fields.title) {
+        setHabits(prev => prev.map(h => h.id === habitId ? { ...h, name: fields.title } : h));
+      }
+    } else {
+      setBrainDumpCards(prev => prev.map(c => c.id === id ? { ...c, ...fields } : c));
+    }
+  };
+
+  const deleteSharedTask = (id) => {
+    if (typeof id === 'string' && id.startsWith('habit-')) {
+      const habitId = Number(id.replace('habit-', ''));
+      deleteHabit(habitId);
+    } else {
+      deleteBrainDumpCard(id);
+    }
+  };
+
+  const toggleSharedTaskProcessed = (id) => {
+    if (typeof id === 'string' && id.startsWith('habit-')) {
+      const habitId = Number(id.replace('habit-', ''));
+      toggleHabit(habitId);
+    } else {
+      toggleBrainDumpProcessed(id);
+    }
+  };
+
   // Brain Dump Operations
   const addBrainDumpCards = (newCards) => {
     setBrainDumpCards(prev => [...newCards, ...prev]);
-  };
-
-  const updateBrainDumpCard = (id, fields) => {
-    setBrainDumpCards(prev => prev.map(c => c.id === id ? { ...c, ...fields } : c));
   };
 
   const deleteBrainDumpCard = (id) => {
@@ -246,6 +272,22 @@ export default function App() {
     setFocusTime(prev => prev + minutes * 60);
   };
 
+  // Combined Shared Tasks for SmartPriority
+  const combinedSharedTasks = [
+    ...brainDumpCards,
+    ...habits.map(h => ({
+      id: `habit-${h.id}`,
+      title: h.name,
+      priority: h.category === 'Academics' || h.category === 'Prep & Work' ? 'High' : 'Medium',
+      estimate: '25 mins',
+      deadline: 'Today',
+      processed: h.completedToday,
+      createdAt: 'Daily Routine',
+      isHabit: true,
+      originalHabitId: h.id
+    }))
+  ];
+
   return (
     <div className="app-container">
       <Sidebar 
@@ -276,19 +318,19 @@ export default function App() {
           <BrainDump 
             cards={brainDumpCards}
             addCards={addBrainDumpCards}
-            updateCard={updateBrainDumpCard}
-            deleteCard={deleteBrainDumpCard}
-            toggleProcessed={toggleBrainDumpProcessed}
+            updateCard={updateSharedTask}
+            deleteCard={deleteSharedTask}
+            toggleProcessed={toggleSharedTaskProcessed}
             addHabit={addHabit}
           />
         )}
 
         {activeTab === 'smartPriority' && (
           <SmartPriority 
-            cards={brainDumpCards}
-            updateCard={updateBrainDumpCard}
-            deleteCard={deleteBrainDumpCard}
-            toggleProcessed={toggleBrainDumpProcessed}
+            cards={combinedSharedTasks}
+            updateCard={updateSharedTask}
+            deleteCard={deleteSharedTask}
+            toggleProcessed={toggleSharedTaskProcessed}
             addHabit={addHabit}
             setActiveTab={setActiveTab}
           />
