@@ -15,7 +15,8 @@ import {
   Brain,
   Flame,
   Scale,
-  Settings
+  Settings,
+  LogOut
 } from 'lucide-react';
 import AddUserModal from './AddUserModal';
 import UserSettingsModal from './UserSettingsModal';
@@ -29,15 +30,17 @@ export default function Sidebar({
   currentUserId,
   switchUser,
   addUser,
-  updateUser
+  updateUser,
+  onLogout,
+  isDemoMode = false
 }) {
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const [showAddUserModal, setShowAddUserModal] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
 
   const activeUser = users.find(u => u.id === currentUserId) || users[0] || {
-    name: 'Priya',
-    role: 'Student',
+    name: 'User',
+    role: 'Productivity HQ',
     avatarColor: '#ec4899',
     avatarEmoji: '🎓'
   };
@@ -66,6 +69,15 @@ export default function Sidebar({
           <span className="brand-subtitle">Productivity & Life HQ</span>
         </div>
       </div>
+
+      {/* Demo Mode Clear Label */}
+      {isDemoMode && (
+        <div className="demo-mode-badge-container animate-fade-in">
+          <span className="badge badge-rose full-width flex-center justify-center font-bold">
+            DEMO MODE (Sample Data)
+          </span>
+        </div>
+      )}
 
       {/* Navigation Items */}
       <nav className="nav-menu">
@@ -161,11 +173,21 @@ export default function Sidebar({
           )}
         </div>
 
-        {/* Theme Toggle Button */}
-        <button onClick={toggleTheme} className="theme-toggle-btn" title="Toggle Theme">
-          {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-          <span>{theme === 'dark' ? 'Light Theme' : 'Soft Theme'}</span>
-        </button>
+        <div className="footer-buttons-row">
+          {/* Theme Toggle Button */}
+          <button onClick={toggleTheme} className="theme-toggle-btn flex-1" title="Toggle Theme">
+            {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+            <span>{theme === 'dark' ? 'Light' : 'Soft'}</span>
+          </button>
+
+          {/* Logout Button */}
+          {onLogout && (
+            <button onClick={onLogout} className="logout-btn" title="Log Out">
+              <LogOut size={16} />
+              <span>Log Out</span>
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Add User Modal */}
@@ -501,18 +523,29 @@ export default function Sidebar({
           opacity: 0.95;
         }
 
+        .demo-mode-badge-container {
+          margin-bottom: 0.75rem;
+        }
+
+        .footer-buttons-row {
+          display: flex;
+          gap: 0.5rem;
+          width: 100%;
+        }
+
+        .flex-1 { flex: 1; }
+
         .theme-toggle-btn {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 0.5rem;
-          width: 100%;
-          padding: 0.6rem;
+          gap: 0.4rem;
+          padding: 0.55rem;
           background: #f8fafc;
           border: 1px solid var(--border-color);
           border-radius: var(--radius-md);
           color: var(--text-main);
-          font-size: 0.85rem;
+          font-size: 0.8rem;
           font-weight: 600;
           cursor: pointer;
           transition: all var(--transition-fast);
@@ -522,6 +555,26 @@ export default function Sidebar({
           background: #f3e8ff;
           border-color: #e9d5ff;
           color: var(--accent-purple);
+        }
+
+        .logout-btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.4rem;
+          padding: 0.55rem 0.75rem;
+          background: #fff1f2;
+          border: 1px solid #fecdd3;
+          border-radius: var(--radius-md);
+          color: #e11d48;
+          font-size: 0.8rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all var(--transition-fast);
+        }
+
+        .logout-btn:hover {
+          background: #ffe4e6;
         }
 
         @media (max-width: 768px) {

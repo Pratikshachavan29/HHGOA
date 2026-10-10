@@ -15,7 +15,7 @@ import {
   Plus
 } from 'lucide-react';
 
-export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusTime, setActiveTab, activeUser = {} }) {
+export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusTime, setActiveTab, activeUser = {}, isDemoMode = false }) {
   const userName = activeUser.name || 'User';
   const userRole = activeUser.role || 'Productivity HQ';
   const focusAreas = activeUser.focusAreas || [];
@@ -42,6 +42,7 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
       <div className="glass-card hero-card">
         <div className="hero-content">
           <div className="badge-row-flex">
+            {isDemoMode && <span className="badge badge-rose">DEMO MODE (Sample Data)</span>}
             <span className="badge badge-indigo">
               <Sparkles size={12} /> {userRole}
             </span>
