@@ -1,13 +1,25 @@
 import React, { useState } from 'react';
-import { UserPlus, Sparkles, X } from 'lucide-react';
+import { UserPlus, Sparkles, X, Check, Layers, ArrowRight } from 'lucide-react';
 
 export default function AddUserModal({ isOpen, onClose, onAddUser }) {
   const [name, setName] = useState('');
-  const [role, setRole] = useState('CS Student');
+  const [role, setRole] = useState(''); // No pre-selected default! User chooses
   const [avatarColor, setAvatarColor] = useState('#ec4899');
   const [avatarEmoji, setAvatarEmoji] = useState('🎓');
+  const [focusAreas, setFocusAreas] = useState([]);
 
   if (!isOpen) return null;
+
+  const roleSuggestions = ['Student', 'Researcher', 'Developer', 'Creative', 'Freelancer', 'Professional', 'General Productivity'];
+
+  const availableFocusAreas = [
+    { id: 'Academics', label: 'Academics & Study', icon: '📚' },
+    { id: 'Tech', label: 'Coding & Tech Prep', icon: '💻' },
+    { id: 'Projects', label: 'Project Milestones', icon: '🚀' },
+    { id: 'Career', label: 'Career & Applications', icon: '💼' },
+    { id: 'Wellness', label: 'Health & Wellness', icon: '🌱' },
+    { id: 'SelfCare', label: 'Self Care & Routines', icon: '⚡' }
+  ];
 
   const colorOptions = [
     { color: '#ec4899', label: 'Soft Pink' },
@@ -18,22 +30,34 @@ export default function AddUserModal({ isOpen, onClose, onAddUser }) {
     { color: '#f43f5e', label: 'Powder Rose' }
   ];
 
-  const emojiOptions = ['🎓', '🚀', '🔬', '🎨', '💼', '⚡', '📚', '🧠'];
+  const emojiOptions = ['🎓', '🚀', '🔬', '🎨', '💼', '⚡', '📚', '🧠', '🌟'];
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const toggleFocusArea = (areaId) => {
+    if (focusAreas.includes(areaId)) {
+      setFocusAreas(focusAreas.filter(a => a !== areaId));
+    } else {
+      setFocusAreas([...focusAreas, areaId]);
+    }
+  };
+
+  const handleSubmit = (e, skipOptional = false) => {
+    if (e) e.preventDefault();
     if (!name.trim()) return;
 
     onAddUser({
       id: Date.now().toString(),
       name: name.trim(),
-      role: role.trim() || 'Student',
+      role: role.trim() || 'Productivity HQ',
       avatarColor,
-      avatarEmoji
+      avatarEmoji,
+      focusAreas: skipOptional ? [] : focusAreas,
+      targetHours: 6,
+      energyBaseline: 7
     });
 
     setName('');
-    setRole('CS Student');
+    setRole('');
+    setFocusAreas([]);
     onClose();
   };
 
@@ -43,16 +67,19 @@ export default function AddUserModal({ isOpen, onClose, onAddUser }) {
         <div className="modal-header">
           <div className="modal-title-group">
             <UserPlus size={22} className="text-purple" />
-            <h2 className="modal-title">Create New User Profile</h2>
+            <div>
+              <h2 className="modal-title">Create User Profile</h2>
+              <span className="modal-sub">Setup profile and optional preferences</span>
+            </div>
           </div>
           <button onClick={onClose} className="btn-icon" title="Close">
             <X size={18} />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="modal-form">
+        <form onSubmit={(e) => handleSubmit(e, false)} className="modal-form">
           <div className="form-group">
-            <label>Full Name / Preferred Name</label>
+            <label>Full Name / Preferred Name *</label>
             <input 
               type="text" 
               placeholder="e.g. Alex Chen, Jordan Taylor" 
@@ -65,14 +92,26 @@ export default function AddUserModal({ isOpen, onClose, onAddUser }) {
           </div>
 
           <div className="form-group">
-            <label>Major / Role</label>
+            <label>Choose Your Role / Occupation (Optional)</label>
             <input 
               type="text" 
-              placeholder="e.g. CS Student, Data Science Major, Pre-Med" 
+              placeholder="Select from options below or type your role..." 
               value={role}
               onChange={(e) => setRole(e.target.value)}
               className="input-field"
             />
+            <div className="chip-flex">
+              {roleSuggestions.map((r) => (
+                <button
+                  key={r}
+                  type="button"
+                  onClick={() => setRole(r)}
+                  className={`chip-btn ${role === r ? 'active' : ''}`}
+                >
+                  {r}
+                </button>
+              ))}
+            </div>
           </div>
 
           <div className="form-group">
@@ -92,7 +131,7 @@ export default function AddUserModal({ isOpen, onClose, onAddUser }) {
           </div>
 
           <div className="form-group">
-            <label>Choose Profile Theme Color</label>
+            <label>Choose Theme Accent Color</label>
             <div className="color-picker-flex">
               {colorOptions.map((opt) => (
                 <button
@@ -107,9 +146,38 @@ export default function AddUserModal({ isOpen, onClose, onAddUser }) {
             </div>
           </div>
 
+          {/* Multi-Select Optional Focus Areas */}
+          <div className="form-group">
+            <label>Optional Focus Areas (Multi-Select)</label>
+            <p className="sub-label-text">Select what matters to you most (or skip optional selections)</p>
+            <div className="focus-grid">
+              {availableFocusAreas.map((item) => {
+                const isSelected = focusAreas.includes(item.id);
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => toggleFocusArea(item.id)}
+                    className={`focus-chip ${isSelected ? 'selected' : ''}`}
+                  >
+                    <span className="focus-icon">{item.icon}</span>
+                    <span className="focus-text">{item.label}</span>
+                    {isSelected && <Check size={14} className="focus-check" />}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           <div className="modal-buttons">
-            <button type="button" onClick={onClose} className="btn btn-secondary">
-              Cancel
+            <button 
+              type="button" 
+              onClick={(e) => handleSubmit(e, true)} 
+              className="btn btn-secondary btn-sm"
+              disabled={!name.trim()}
+              title="Skip optional focus area selections"
+            >
+              Skip Optional Preferences
             </button>
             <button type="submit" className="btn btn-primary">
               <UserPlus size={16} /> Create & Switch Profile
@@ -122,18 +190,20 @@ export default function AddUserModal({ isOpen, onClose, onAddUser }) {
         .modal-overlay {
           position: fixed;
           inset: 0;
-          background: rgba(24, 24, 27, 0.4);
+          background: rgba(24, 24, 27, 0.45);
           backdrop-filter: blur(6px);
-          z-index: 200;
+          z-index: 250;
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 1rem;
+          padding: 1.5rem 1rem;
         }
 
         .modal-card {
           width: 100%;
-          max-width: 460px;
+          max-width: 500px;
+          max-height: 90vh;
+          overflow-y: auto;
           padding: 2rem;
           background: #ffffff;
         }
@@ -141,43 +211,85 @@ export default function AddUserModal({ isOpen, onClose, onAddUser }) {
         .modal-header {
           display: flex;
           justify-content: space-between;
-          align-items: center;
-          margin-bottom: 1.5rem;
+          align-items: flex-start;
+          margin-bottom: 1.25rem;
+          border-bottom: 1px solid var(--border-color);
+          padding-bottom: 0.85rem;
         }
 
         .modal-title-group {
           display: flex;
-          align-items: center;
-          gap: 0.6rem;
+          align-items: flex-start;
+          gap: 0.65rem;
         }
 
         .modal-title {
-          font-size: 1.35rem;
+          font-size: 1.3rem;
           font-weight: 800;
           color: #18181b;
           margin: 0;
         }
 
+        .modal-sub {
+          font-size: 0.78rem;
+          color: var(--text-muted);
+        }
+
         .modal-form {
           display: flex;
           flex-direction: column;
-          gap: 1.25rem;
+          gap: 1.15rem;
         }
 
         .text-purple {
           color: #7c3aed;
         }
 
+        .sub-label-text {
+          font-size: 0.75rem;
+          color: var(--text-muted);
+          margin-bottom: 0.35rem;
+        }
+
+        .chip-flex {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.4rem;
+          margin-top: 0.4rem;
+        }
+
+        .chip-btn {
+          font-size: 0.75rem;
+          padding: 0.28rem 0.6rem;
+          border-radius: var(--radius-full);
+          background: #faf8fc;
+          border: 1px solid #e4e4e7;
+          color: var(--text-muted);
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .chip-btn:hover {
+          background: #f3e8ff;
+          color: #7c3aed;
+        }
+
+        .chip-btn.active {
+          background: #7c3aed;
+          color: white;
+          border-color: #7c3aed;
+        }
+
         .emoji-grid {
           display: grid;
-          grid-template-columns: repeat(8, 1fr);
-          gap: 0.4rem;
+          grid-template-columns: repeat(9, 1fr);
+          gap: 0.35rem;
           margin-top: 0.35rem;
         }
 
         .emoji-btn {
-          font-size: 1.25rem;
-          padding: 0.4rem;
+          font-size: 1.15rem;
+          padding: 0.35rem;
           border-radius: var(--radius-md);
           background: #faf8fc;
           border: 1px solid var(--border-color);
@@ -202,8 +314,8 @@ export default function AddUserModal({ isOpen, onClose, onAddUser }) {
         }
 
         .color-dot {
-          width: 32px;
-          height: 32px;
+          width: 30px;
+          height: 30px;
           border-radius: var(--radius-full);
           border: 2px solid transparent;
           cursor: pointer;
@@ -216,15 +328,53 @@ export default function AddUserModal({ isOpen, onClose, onAddUser }) {
 
         .color-dot.active {
           border-color: #18181b;
-          box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
           transform: scale(1.1);
+        }
+
+        .focus-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 0.5rem;
+        }
+
+        .focus-chip {
+          display: flex;
+          align-items: center;
+          gap: 0.45rem;
+          padding: 0.5rem 0.75rem;
+          border-radius: var(--radius-md);
+          background: #faf8fc;
+          border: 1px solid #e4e4e7;
+          color: #18181b;
+          font-size: 0.78rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          text-align: left;
+        }
+
+        .focus-chip:hover {
+          background: #fdf2f8;
+          border-color: #fbcfe8;
+        }
+
+        .focus-chip.selected {
+          background: #f3e8ff;
+          border-color: #e9d5ff;
+          color: #7c3aed;
+        }
+
+        .focus-check {
+          margin-left: auto;
+          color: #7c3aed;
         }
 
         .modal-buttons {
           display: flex;
-          justify-content: flex-end;
-          gap: 0.75rem;
+          justify-content: space-between;
+          align-items: center;
           margin-top: 0.75rem;
+          gap: 0.5rem;
         }
       `}</style>
     </div>

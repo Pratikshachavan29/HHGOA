@@ -15,7 +15,11 @@ import {
   Plus
 } from 'lucide-react';
 
-export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusTime, setActiveTab, userName = 'Priya' }) {
+export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusTime, setActiveTab, activeUser = {} }) {
+  const userName = activeUser.name || 'User';
+  const userRole = activeUser.role || 'Productivity HQ';
+  const focusAreas = activeUser.focusAreas || [];
+
   // Calculate completion statistics
   const completedTodayCount = habits.filter(h => h.completedToday).length;
   const habitCompletionRate = habits.length > 0 ? Math.round((completedTodayCount / habits.length) * 100) : 0;
@@ -37,9 +41,14 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
       {/* Top Banner - Hero Card */}
       <div className="glass-card hero-card">
         <div className="hero-content">
-          <span className="badge badge-indigo">
-            <Sparkles size={12} /> Student Productivity HQ
-          </span>
+          <div className="badge-row-flex">
+            <span className="badge badge-indigo">
+              <Sparkles size={12} /> {userRole}
+            </span>
+            {focusAreas.map(fa => (
+              <span key={fa} className="badge badge-purple">{fa}</span>
+            ))}
+          </div>
           <h1 className="hero-title">
             Hey <span className="title-gradient">{userName}</span>! Ready to crush today? 🚀
           </h1>
@@ -239,6 +248,13 @@ export default function Dashboard({ habits, toggleHabit, moodLogs, goals, focusT
           padding: 2.25rem;
           background: linear-gradient(135deg, #fdf2f8 0%, #f3e8ff 60%, #eff6ff 100%);
           border-color: #e9d5ff;
+        }
+
+        .badge-row-flex {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.4rem;
+          align-items: center;
         }
 
         .hero-title {

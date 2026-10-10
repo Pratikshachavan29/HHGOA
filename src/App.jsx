@@ -14,10 +14,10 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [theme, setTheme] = useState('dark');
 
-  // Default initial users
+  // Default initial users (without rigid pre-selected role assumptions)
   const defaultUsers = [
-    { id: '1', name: 'Priya', role: 'CS Student', avatarColor: '#ec4899', avatarEmoji: '🎓' },
-    { id: '2', name: 'Alex', role: 'Pre-Med Major', avatarColor: '#10b981', avatarEmoji: '🔬' }
+    { id: '1', name: 'Priya', role: 'Student', avatarColor: '#ec4899', avatarEmoji: '🎓', focusAreas: ['Academics', 'Tech'], targetHours: 6, energyBaseline: 7 },
+    { id: '2', name: 'Alex', role: 'Researcher', avatarColor: '#10b981', avatarEmoji: '🔬', focusAreas: ['Projects', 'Wellness'], targetHours: 5, energyBaseline: 8 }
   ];
 
   // Load or initialize users state
@@ -113,6 +113,15 @@ export default function App() {
     return saved ? JSON.parse(saved) : getInitialBrainDumpForUser();
   });
 
+  // Load user specific preference override if saved
+  useEffect(() => {
+    const savedPrefs = localStorage.getItem(`lifelens_preferences_user_${currentUserId}`);
+    if (savedPrefs) {
+      const prefs = JSON.parse(savedPrefs);
+      setUsers(prev => prev.map(u => u.id === currentUserId ? { ...u, ...prefs } : u));
+    }
+  }, [currentUserId]);
+
   // Save users list to localStorage
   useEffect(() => {
     localStorage.setItem('lifelens_users', JSON.stringify(users));
@@ -122,6 +131,20 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem('lifelens_active_user_id', currentUserId);
   }, [currentUserId]);
+
+  // Add new user profile with preferences
+  const handleAddUser = (newUser) => {
+    const updatedUsers = [...users, newUser];
+    setUsers(updatedUsers);
+    setCurrentUserId(newUser.id);
+    localStorage.setItem(`lifelens_preferences_user_${newUser.id}`, JSON.stringify(newUser));
+  };
+
+  // Update existing user profile and preferences
+  const handleUpdateUser = (updatedUser) => {
+    setUsers(prev => prev.map(u => u.id === updatedUser.id ? updatedUser : u));
+    localStorage.setItem(`lifelens_preferences_user_${updatedUser.id}`, JSON.stringify(updatedUser));
+  };
 
   // Reload user-specific data when active user changes
   useEffect(() => {
@@ -161,13 +184,6 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem(`lifelens_braindump_user_${currentUserId}`, JSON.stringify(brainDumpCards));
   }, [brainDumpCards, currentUserId]);
-
-  // Add new user profile
-  const handleAddUser = (newUser) => {
-    const updatedUsers = [...users, newUser];
-    setUsers(updatedUsers);
-    setCurrentUserId(newUser.id);
-  };
 
   // Switch active user
   const handleSwitchUser = (userId) => {
@@ -300,6 +316,7 @@ export default function App() {
         currentUserId={currentUserId}
         switchUser={handleSwitchUser}
         addUser={handleAddUser}
+        updateUser={handleUpdateUser}
       />
 
       <main className="main-content">
@@ -311,7 +328,7 @@ export default function App() {
             goals={goals} 
             focusTime={focusTime}
             setActiveTab={setActiveTab}
-            userName={activeUser.name}
+            activeUser={activeUser}
           />
         )}
 
@@ -342,6 +359,7 @@ export default function App() {
             tasks={brainDumpCards}
             habits={habits}
             setActiveTab={setActiveTab}
+            activeUser={activeUser}
           />
         )}
 

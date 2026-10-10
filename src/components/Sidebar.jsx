@@ -14,9 +14,11 @@ import {
   Check,
   Brain,
   Flame,
-  Scale
+  Scale,
+  Settings
 } from 'lucide-react';
 import AddUserModal from './AddUserModal';
+import UserSettingsModal from './UserSettingsModal';
 
 export default function Sidebar({ 
   activeTab, 
@@ -26,14 +28,16 @@ export default function Sidebar({
   users,
   currentUserId,
   switchUser,
-  addUser
+  addUser,
+  updateUser
 }) {
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const [showAddUserModal, setShowAddUserModal] = useState(false);
+  const [showSettingsModal, setShowSettingsModal] = useState(false);
 
   const activeUser = users.find(u => u.id === currentUserId) || users[0] || {
     name: 'Priya',
-    role: 'CS Student',
+    role: 'Student',
     avatarColor: '#ec4899',
     avatarEmoji: '🎓'
   };
@@ -89,7 +93,7 @@ export default function Sidebar({
           <button 
             onClick={() => setShowUserDropdown(!showUserDropdown)} 
             className="user-profile-card interactive"
-            title="Click to switch or add profile"
+            title="Click to switch or edit profile"
           >
             <div className="avatar" style={{ background: activeUser.avatarColor || '#ec4899' }}>
               <span>{activeUser.avatarEmoji || '🎓'}</span>
@@ -105,7 +109,7 @@ export default function Sidebar({
           {showUserDropdown && (
             <div className="user-dropdown-popover glass-card animate-fade-in">
               <div className="dropdown-header">
-                <span>Switch Student Profile</span>
+                <span>Switch User Profile</span>
               </div>
 
               <div className="user-list">
@@ -130,16 +134,29 @@ export default function Sidebar({
                 ))}
               </div>
 
-              <button 
-                onClick={() => {
-                  setShowUserDropdown(false);
-                  setShowAddUserModal(true);
-                }} 
-                className="add-user-btn"
-              >
-                <UserPlus size={16} />
-                <span>Add New Profile</span>
-              </button>
+              <div className="dropdown-actions-row">
+                <button 
+                  onClick={() => {
+                    setShowUserDropdown(false);
+                    setShowSettingsModal(true);
+                  }} 
+                  className="settings-btn-sub"
+                  title="Edit profile & focus area preferences"
+                >
+                  <Settings size={15} /> Edit Preferences
+                </button>
+
+                <button 
+                  onClick={() => {
+                    setShowUserDropdown(false);
+                    setShowAddUserModal(true);
+                  }} 
+                  className="add-user-btn"
+                >
+                  <UserPlus size={15} />
+                  <span>Add Profile</span>
+                </button>
+              </div>
             </div>
           )}
         </div>
@@ -156,6 +173,14 @@ export default function Sidebar({
         isOpen={showAddUserModal}
         onClose={() => setShowAddUserModal(false)}
         onAddUser={addUser}
+      />
+
+      {/* User Preferences Settings Modal */}
+      <UserSettingsModal 
+        isOpen={showSettingsModal}
+        onClose={() => setShowSettingsModal(false)}
+        activeUser={activeUser}
+        onSaveUser={updateUser}
       />
 
       <style>{`
@@ -427,6 +452,35 @@ export default function Sidebar({
           color: var(--accent-purple);
         }
 
+        .dropdown-actions-row {
+          display: flex;
+          flex-direction: column;
+          gap: 0.35rem;
+          margin-top: 0.35rem;
+          border-top: 1px solid #f4f4f5;
+          padding-top: 0.5rem;
+        }
+
+        .settings-btn-sub {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.4rem;
+          padding: 0.45rem;
+          border-radius: var(--radius-md);
+          background: #faf8fc;
+          border: 1px solid #e9d5ff;
+          color: #7c3aed;
+          font-weight: 600;
+          font-size: 0.78rem;
+          cursor: pointer;
+          transition: all var(--transition-fast);
+        }
+
+        .settings-btn-sub:hover {
+          background: #f3e8ff;
+        }
+
         .add-user-btn {
           display: flex;
           align-items: center;
@@ -441,7 +495,6 @@ export default function Sidebar({
           font-size: 0.82rem;
           cursor: pointer;
           transition: opacity var(--transition-fast);
-          margin-top: 0.25rem;
         }
 
         .add-user-btn:hover {

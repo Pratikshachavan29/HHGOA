@@ -16,14 +16,17 @@ import {
   ChevronRight
 } from 'lucide-react';
 
-export default function RealityCheck({ tasks = [], habits = [], setActiveTab }) {
-  // Inputs: Available hours today & Energy level (1-10)
-  const [availableHours, setAvailableHours] = useState(6);
-  const [energyLevel, setEnergyLevel] = useState(7);
+export default function RealityCheck({ tasks = [], habits = [], setActiveTab, activeUser = {} }) {
+  // Inputs: Available hours today & Energy level (1-10) dynamically loaded from user profile preferences
+  const defaultHours = activeUser.targetHours || 6;
+  const defaultEnergy = activeUser.energyBaseline || 7;
+
+  const [availableHours, setAvailableHours] = useState(defaultHours);
+  const [energyLevel, setEnergyLevel] = useState(defaultEnergy);
 
   // Simulator State (Sandbox mode - doesn't alter saved tasks)
-  const [simAvailableHours, setSimAvailableHours] = useState(6);
-  const [simEnergyLevel, setSimEnergyLevel] = useState(7);
+  const [simAvailableHours, setSimAvailableHours] = useState(defaultHours);
+  const [simEnergyLevel, setSimEnergyLevel] = useState(defaultEnergy);
   const [deferredTaskIds, setDeferredTaskIds] = useState([]);
 
   // Combine active tasks from brain dump and habits
