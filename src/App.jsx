@@ -132,12 +132,25 @@ export default function App() {
     localStorage.setItem('lifelens_active_user_id', currentUserId);
   }, [currentUserId]);
 
-  // Add new user profile with preferences
+  // Add new user profile with user-selected preferences (no mandatory defaults pre-selected)
   const handleAddUser = (newUser) => {
     const updatedUsers = [...users, newUser];
     setUsers(updatedUsers);
-    setCurrentUserId(newUser.id);
+    
+    // Save chosen routines & goals (empty array if optional choices were skipped)
+    const newHabits = newUser.initialHabits || [];
+    const newGoals = newUser.initialGoals || [];
+    const newBrainDump = [];
+
+    localStorage.setItem(`lifelens_habits_user_${newUser.id}`, JSON.stringify(newHabits));
+    localStorage.setItem(`lifelens_goals_user_${newUser.id}`, JSON.stringify(newGoals));
+    localStorage.setItem(`lifelens_braindump_user_${newUser.id}`, JSON.stringify(newBrainDump));
     localStorage.setItem(`lifelens_preferences_user_${newUser.id}`, JSON.stringify(newUser));
+
+    setCurrentUserId(newUser.id);
+    setHabits(newHabits);
+    setGoals(newGoals);
+    setBrainDumpCards(newBrainDump);
   };
 
   // Update existing user profile and preferences
@@ -149,19 +162,19 @@ export default function App() {
   // Reload user-specific data when active user changes
   useEffect(() => {
     const savedHabits = localStorage.getItem(`lifelens_habits_user_${currentUserId}`);
-    setHabits(savedHabits ? JSON.parse(savedHabits) : getInitialHabitsForUser(activeUser.name));
+    setHabits(savedHabits ? JSON.parse(savedHabits) : []);
 
     const savedMoods = localStorage.getItem(`lifelens_moods_user_${currentUserId}`);
     setMoodLogs(savedMoods ? JSON.parse(savedMoods) : getInitialMoodLogsForUser());
 
     const savedGoals = localStorage.getItem(`lifelens_goals_user_${currentUserId}`);
-    setGoals(savedGoals ? JSON.parse(savedGoals) : getInitialGoalsForUser());
+    setGoals(savedGoals ? JSON.parse(savedGoals) : []);
 
     const savedFocus = localStorage.getItem(`lifelens_focustime_user_${currentUserId}`);
     setFocusTime(savedFocus ? JSON.parse(savedFocus) : 5400);
 
     const savedDump = localStorage.getItem(`lifelens_braindump_user_${currentUserId}`);
-    setBrainDumpCards(savedDump ? JSON.parse(savedDump) : getInitialBrainDumpForUser());
+    setBrainDumpCards(savedDump ? JSON.parse(savedDump) : []);
   }, [currentUserId]);
 
   // Save data per user
