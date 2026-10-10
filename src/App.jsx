@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
+import BrainDump from './components/BrainDump';
 import HabitTracker from './components/HabitTracker';
 import MoodJournal from './components/MoodJournal';
 import GoalsTracker from './components/GoalsTracker';
@@ -50,6 +51,36 @@ export default function App() {
     { id: 3, title: 'Maintain 3.8+ GPA this Semester', category: 'Academics', targetDate: 'Dec 30, 2026', progress: 60 },
   ];
 
+  const getInitialBrainDumpForUser = () => [
+    {
+      id: 'bd-1',
+      title: 'Submit OS Group Project Draft',
+      priority: 'High',
+      estimate: '1 hour',
+      deadline: 'Tomorrow 5:00 PM',
+      processed: false,
+      createdAt: '10:30 AM'
+    },
+    {
+      id: 'bd-2',
+      title: 'Review System Design Chapter 4',
+      priority: 'Medium',
+      estimate: '45 mins',
+      deadline: 'This Friday',
+      processed: false,
+      createdAt: '10:32 AM'
+    },
+    {
+      id: 'bd-3',
+      title: 'Schedule Mock Technical Interview',
+      priority: 'High',
+      estimate: '20 mins',
+      deadline: 'ASAP',
+      processed: false,
+      createdAt: '10:35 AM'
+    }
+  ];
+
   // Per-user habits state
   const [habits, setHabits] = useState(() => {
     const saved = localStorage.getItem(`lifelens_habits_user_${currentUserId}`);
@@ -72,6 +103,12 @@ export default function App() {
   const [focusTime, setFocusTime] = useState(() => {
     const saved = localStorage.getItem(`lifelens_focustime_user_${currentUserId}`);
     return saved ? JSON.parse(saved) : 5400; // 90 mins default
+  });
+
+  // Per-user Brain Dump cards state
+  const [brainDumpCards, setBrainDumpCards] = useState(() => {
+    const saved = localStorage.getItem(`lifelens_braindump_user_${currentUserId}`);
+    return saved ? JSON.parse(saved) : getInitialBrainDumpForUser();
   });
 
   // Save users list to localStorage
@@ -97,6 +134,9 @@ export default function App() {
 
     const savedFocus = localStorage.getItem(`lifelens_focustime_user_${currentUserId}`);
     setFocusTime(savedFocus ? JSON.parse(savedFocus) : 5400);
+
+    const savedDump = localStorage.getItem(`lifelens_braindump_user_${currentUserId}`);
+    setBrainDumpCards(savedDump ? JSON.parse(savedDump) : getInitialBrainDumpForUser());
   }, [currentUserId]);
 
   // Save data per user
@@ -116,6 +156,10 @@ export default function App() {
     localStorage.setItem(`lifelens_focustime_user_${currentUserId}`, JSON.stringify(focusTime));
   }, [focusTime, currentUserId]);
 
+  useEffect(() => {
+    localStorage.setItem(`lifelens_braindump_user_${currentUserId}`, JSON.stringify(brainDumpCards));
+  }, [brainDumpCards, currentUserId]);
+
   // Add new user profile
   const handleAddUser = (newUser) => {
     const updatedUsers = [...users, newUser];
@@ -133,6 +177,23 @@ export default function App() {
     const newTheme = theme === 'dark' ? 'light' : 'dark';
     setTheme(newTheme);
     document.documentElement.setAttribute('data-theme', newTheme);
+  };
+
+  // Brain Dump Operations
+  const addBrainDumpCards = (newCards) => {
+    setBrainDumpCards(prev => [...newCards, ...prev]);
+  };
+
+  const updateBrainDumpCard = (id, fields) => {
+    setBrainDumpCards(prev => prev.map(c => c.id === id ? { ...c, ...fields } : c));
+  };
+
+  const deleteBrainDumpCard = (id) => {
+    setBrainDumpCards(prev => prev.filter(c => c.id !== id));
+  };
+
+  const toggleBrainDumpProcessed = (id) => {
+    setBrainDumpCards(prev => prev.map(c => c.id === id ? { ...c, processed: !c.processed } : c));
   };
 
   // Habit Operations
@@ -207,6 +268,17 @@ export default function App() {
             focusTime={focusTime}
             setActiveTab={setActiveTab}
             userName={activeUser.name}
+          />
+        )}
+
+        {activeTab === 'brainDump' && (
+          <BrainDump 
+            cards={brainDumpCards}
+            addCards={addBrainDumpCards}
+            updateCard={updateBrainDumpCard}
+            deleteCard={deleteBrainDumpCard}
+            toggleProcessed={toggleBrainDumpProcessed}
+            addHabit={addHabit}
           />
         )}
 
